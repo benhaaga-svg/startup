@@ -5,26 +5,25 @@ Track your bid is a means to track the overall performance of players of call yo
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
 
 ### Elevator pitch
 Ever wanted to track the history of your games and see how you fare against the competition? Well now with Track your bid you can! It allows for game tracking and statistics across your career! Simply allowing everyone to see their personal history fun statistics from the ages. Also allowing for trusted members to edit and add new history. So login and claim your glory!
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](Home.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here is a design of the Leaderboard page which will has a similar design to the rest of the pages.
 
 ```mermaid
 sequenceDiagram
@@ -35,20 +34,21 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Ability to see data from mange different games and times
+- Ability to see personalized data and performace
+- Data uploading capabilities
+- Global tracking of players performance
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Uses correct HTML structure for application. 4 HTML pages. One for login, Leaderboard, Uploading, Game history.
+- **CSS** - Enchances the users perception of the website and adds interesting effects to higher performace players.
+- **React** - Provides login and the use of React for routing and components.
+- **Service** - Backend storage to login information and services for score keeping and statistical analysis.
+- **DB/Login** - Store users and games history. Register and login users. Credentials securely stored in database. Can't see personal data unless authenticated nor upload data.
+- **WebSocket** - As new games get uploaded the scoreboards and personal history will be updated automatically.
 
 ## 🚀 AWS deliverable
 
