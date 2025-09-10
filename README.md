@@ -23,7 +23,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ![Design image](Home.png)
 
-Here is a design of the Leaderboard page which will has a similar design to the rest of the pages.
+Here is a design of the Leaderboard page where one can see the currently best performing players and global statistics.
 
 ### Key features
 
