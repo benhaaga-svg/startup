@@ -25,13 +25,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 Here is a design of the Leaderboard page which will has a similar design to the rest of the pages.
 
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
-
 ### Key features
 
 - Ability to see data from mange different games and times
