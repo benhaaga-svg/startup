@@ -47,21 +47,21 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
 
 ## 🚀 HTML deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I created 5 HTML pages for the website.
+- [x] **Proper HTML element usage** - I used proper HTML elemements to create my pages.
+- [x] **Links** - My pages link to each other via html elements.
+- [x] **Text** - I used text to demonstrate how the website will look when in use.
+- [x] **3rd party API placeholder** - The 3rd party API will be where I get all my data from for the tables.
+- [x] **Images** - I created an image for the website icon.
+- [x] **Login placeholder** - I created a login and signup page.
+- [x] **DB data placeholder** - I created placed that data will be populated, uploaded, and quieried.
+- [x] **WebSocket placeholder** - I created a place to show when it was last updated, which will be a websocket.
 
 ## 🚀 CSS deliverable
 
