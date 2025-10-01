@@ -6,6 +6,7 @@
         <link rel="icon" href="favcon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="main.css"/>
+        <link rel="stylesheet" href="upload.css"/>
         <title>Track Your Bids</title>
 
     </head>
@@ -27,15 +28,23 @@
 
         <main>
            <h2>Upload a game</h2>
-           <div><p>Player 1: </p><textarea></textarea><p>Player 1 Score: </p><textarea></textarea></div>
-           <div><p>Player 2: </p><textarea></textarea><p>Player 2 Score: </p><textarea></textarea></div>
-           <div><p>Player 3: </p><textarea></textarea><p>Player 3 Score: </p><textarea></textarea></div>
-           <div><p>Player 4: </p><textarea></textarea><p>Player 4 Score: </p><textarea></textarea></div>
-           <div><p>Player 5: </p><textarea></textarea><p>Player 5 Score: </p><textarea></textarea></div>
-           <div><p>Player 6: </p><textarea></textarea><p>Player 6 Score: </p><textarea></textarea></div>
-           <p>Date played: </p><textarea></textarea>
-           <div><p>Upload game sheet:*</p><img src="placeholder.png"></div>
-
+           <div class="sign-in-square">
+           <div><p>Player 1: </p><input></input><p>Player 1 Score: </p><input></input></div>
+           <div><p>Player 2: </p><input></input><p>Player 2 Score: </p><input></input></div>
+           <div><p>Player 3: </p><input></input><p>Player 3 Score: </p><input></input></div>
+           <div><p>Player 4: </p><input></input><p>Player 4 Score: </p><input></input></div>
+           <div><p>Player 5: </p><input></input><p>Player 5 Score: </p><input></input></div>
+           <div><p>Player 6: </p><input></input><p>Player 6 Score: </p><input></input></div>
+           <div><p>Date played:* </p><input></input><p>Game Name: </p><input></input></div>
+           <div class="upload-image-area" onclick="document.getElementById('gameSheetInput').click();">
+               <p>Upload game sheet:*</p>
+               <img src="placeholder.png" id="gameSheetPreview">
+               <input type="file" id="gameSheetInput" style="display:none" accept="image/*">
+           </div>
+        
+           <div><p>*required</p></div>
+           </div>
+          
 
            <button>Submit</button>
         </main>
