@@ -67,12 +67,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - The header and footer elements are universal and found in main.css with other universal elements. Each page has a seperate css file for specific needs.
+- [x] **Navigation elements** - Included in the header is the navigation to all other pages, changing options depening on the page.
+- [x] **Responsive to window resizing** - The header and footer remain and change, the main body is also adaptive to changing sizes.
+- [x] **Application elements** - I did complete this part of the deliverable.
+- [x] **Application text content** - I did complete this part.
+- [x] **Application images** - A few images have been included, including a place holder for uploading images.
 
 ## 🚀 React part 1: Routing deliverable
 
