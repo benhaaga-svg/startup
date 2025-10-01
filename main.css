@@ -1,6 +1,7 @@
 header {
     background: linear-gradient(90deg, #1a237e 0%, #283593 100%);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 1.2rem 2.5rem 1.2rem 2.5rem;
@@ -29,6 +30,7 @@ header div {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 header p {
     margin: 0;
@@ -69,14 +71,19 @@ header nav menu li a:hover {
 /* Footer styling to remove white space beneath */
 footer {
     margin-bottom: 0;
-    padding-bottom: 0;
+    padding: 1rem 2.5rem;
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
     background: #1a237e;
     color: #fff;
     box-shadow: 0 -2px 8px rgba(26,35,126,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
@@ -85,4 +92,13 @@ footer a{
     color: #fff;
     text-decoration: underline;
     font-weight: 500;
+}
+
+
+main h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #1a237e;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
 }
