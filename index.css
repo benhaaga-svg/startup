@@ -23,7 +23,13 @@ body{
 }
 
 
-
+h1 {
+    text-align:center;
+    color:#1a237e; 
+    margin-bottom:2rem; 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 3rem; letter-spacing: 1px;
+}
 input {
     max-width: 75%;
     padding: 0.6em 1em;
