@@ -8,13 +8,6 @@ main {
 	padding-top: 2rem;
 }
 
-main h2 {
-    font-family: 'Montserrat', sans-serif;
-    color: #1a237e;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
 
 table {
 	border-collapse: separate;
