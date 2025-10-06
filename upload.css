@@ -1,0 +1,154 @@
+/* Upload page specific styles */
+
+.upload-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.upload-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.upload-section h2 {
+    color: #1a237e;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.player-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.player-entry label {
+    color: #1a237e;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.player-inputs {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.5rem;
+}
+
+.player-inputs input {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #333;
+}
+
+.player-inputs input:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+}
+
+.date-section {
+    margin-bottom: 2rem;
+}
+
+.date-section label {
+    display: block;
+    color: #1a237e;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.date-section input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #333;
+}
+
+.date-section input:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+}
+
+.upload-file-section {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border: 2px dashed #1a237e;
+    border-radius: 10px;
+    text-align: center;
+    background: rgba(26, 35, 126, 0.05);
+    transition: all 0.3s ease;
+}
+
+.upload-file-section:hover {
+    background: rgba(26, 35, 126, 0.1);
+    border-color: #3949ab;
+}
+
+.upload-file-section label {
+    color: #1a237e;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: block;
+    font-size: 1rem;
+}
+
+.upload-file-section img {
+    max-width: 200px;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-section {
+    text-align: center;
+}
+
+.submit-section button {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .upload-section {
+        padding: 1.5rem;
+    }
+
+    .upload-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .player-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .player-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-file-section {
+        padding: 1.5rem;
+    }
+}

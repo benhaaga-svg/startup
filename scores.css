@@ -1,0 +1,84 @@
+/* Scores page specific styles */
+
+.scores-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-section input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #333;
+}
+
+.search-section input:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+}
+
+.search-section button {
+    padding: 0.75rem 2rem;
+}
+
+.table-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.table-container table {
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.table-container table td {
+    text-align: center;
+}
+
+.table-container table tr:first-child td {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .search-section {
+        padding: 1rem;
+    }
+
+    .search-section input {
+        min-width: 100%;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .table-container table {
+        font-size: 0.8rem;
+    }
+
+    .table-container table td {
+        padding: 0.6rem 0.3rem;
+        white-space: nowrap;
+    }
+}

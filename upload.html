@@ -5,14 +5,17 @@
         <meta charset="UTF-8" />
         <link rel="icon" href="favcon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Track Your Bids</title>
-
+        <title>Track Your Bids - Upload</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="upload.css">
     </head>
     <body>
-
         <header>
             <h1>Track Your Bids<sup>&reg;</sup></h1>
-            <p>Ben Haaga</p><a href="profile.html"><img src="blank_user.png"></a>
+            <div class="user-profile">
+                <p>Ben Haaga</p>
+                <a href="profile.html"><img src="blank_user.png" alt="User Profile"></a>
+            </div>
             <nav>
                 <menu>
                     <li><a href="home.html">Home</a></li>
@@ -24,31 +27,84 @@
         </header>
 
         <main>
-           <h2>Upload a game</h2>
-           <div><p>Player 1: </p><textarea></textarea><p>Player 1 Score: </p><textarea></textarea></div>
-           <div><p>Player 2: </p><textarea></textarea><p>Player 2 Score: </p><textarea></textarea></div>
-           <div><p>Player 3: </p><textarea></textarea><p>Player 3 Score: </p><textarea></textarea></div>
-           <div><p>Player 4: </p><textarea></textarea><p>Player 4 Score: </p><textarea></textarea></div>
-           <div><p>Player 5: </p><textarea></textarea><p>Player 5 Score: </p><textarea></textarea></div>
-           <div><p>Player 6: </p><textarea></textarea><p>Player 6 Score: </p><textarea></textarea></div>
-           <p>Date played: </p><textarea></textarea>
-           <div><p>Upload game sheet:*</p><img src="placeholder.png"></div>
+            <div class="upload-container">
+                <div class="upload-section">
+                    <h2>Upload a Game</h2>
+                    <form>
+                        <div class="player-grid">
+                            <div class="player-entry">
+                                <label for="player1">Player 1</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player1" placeholder="Player name" required>
+                                    <input type="number" placeholder="Score" required>
+                                </div>
+                            </div>
 
+                            <div class="player-entry">
+                                <label for="player2">Player 2</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player2" placeholder="Player name" required>
+                                    <input type="number" placeholder="Score" required>
+                                </div>
+                            </div>
 
-           <button>Submit</button>
+                            <div class="player-entry">
+                                <label for="player3">Player 3</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player3" placeholder="Player name">
+                                    <input type="number" placeholder="Score">
+                                </div>
+                            </div>
+
+                            <div class="player-entry">
+                                <label for="player4">Player 4</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player4" placeholder="Player name">
+                                    <input type="number" placeholder="Score">
+                                </div>
+                            </div>
+
+                            <div class="player-entry">
+                                <label for="player5">Player 5</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player5" placeholder="Player name">
+                                    <input type="number" placeholder="Score">
+                                </div>
+                            </div>
+
+                            <div class="player-entry">
+                                <label for="player6">Player 6</label>
+                                <div class="player-inputs">
+                                    <input type="text" id="player6" placeholder="Player name">
+                                    <input type="number" placeholder="Score">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="date-section">
+                            <label for="datePlayed">Date Played</label>
+                            <input type="date" id="datePlayed" required>
+                        </div>
+
+                        <div class="upload-file-section">
+                            <label for="gameSheet">Upload Game Sheet (Optional)</label>
+                            <input type="file" id="gameSheet" accept="image/*" style="display: none;">
+                            <img src="placeholder.png" alt="Game sheet preview">
+                        </div>
+
+                        <div class="submit-section">
+                            <button type="submit" class="btn-primary">Submit Game</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
 
         <footer>
-
             <div>
                 <p>Designed by Ben Haaga in 2025 for cs260</p>
                 <a href="https://github.com/benhaaga-svg/startup">Github Repository</a>
             </div>
-
         </footer>
-
-
     </body>
-
-
 </html>

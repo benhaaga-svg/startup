@@ -5,14 +5,17 @@
         <link rel="icon" href="favcon.ico" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Track Your Bids</title>
-
+        <title>Track Your Bids - Leaderboard</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="leaderboard.css">
     </head>
     <body>
-
         <header>
             <h1>Track Your Bids<sup>&reg;</sup></h1>
-            <p>Ben Haaga</p><a href="profile.html"><img src="blank_user.png"></a>
+            <div class="user-profile">
+                <p>Ben Haaga</p>
+                <a href="profile.html"><img src="blank_user.png" alt="User Profile"></a>
+            </div>
             <nav>
                 <menu>
                     <li><a href="home.html">Home</a></li>
@@ -24,73 +27,78 @@
         </header>
 
         <main>
-           <table>
-                <tr>
-                    <td>Name</td>
-                    <td>Position</td>
-                    <td>Games Won</td>
-                    <td>Games Lost</td>
-                    <td>Avg Score</td>
-                </tr>
-                <tr>
-                    <td>John Doe</td>
-                    <td>1st</td>
-                    <td>12</td>
-                    <td>2</td>
-                    <td>83</td>
-                </tr>
-                <tr>
-                    <td>Jessie Terry</td>
-                    <td>2nd</td>
-                    <td>11</td>
-                    <td>4</td>
-                    <td>75</td>
-                </tr>
-                <tr>
-                    <td>Marry Beth</td>
-                    <td>3rd</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>72</td>
-                </tr>
-                <tr>
-                    <td>Tabith Kim</td>
-                    <td>4th</td>
-                    <td>9</td>
-                    <td>6</td>
-                    <td>67</td>
-                </tr>
-                <tr>
-                    <td>Jason Smith</td>
-                    <td>5th</td>
-                    <td>7</td>
-                    <td>7</td>
-                    <td>65</td>
-                </tr>
-                <tr>
-                    <td>Ben (You)</td>
-                    <td>12th</td>
-                    <td>2</td>
-                    <td>10</td>
-                    <td>24</td>
-                </tr>
-           </table>
+            <div class="leaderboard-container">
+                <h2 class="page-title">Leaderboard</h2>
 
-           <h3>Global Stats</h3>
-           <p>Total Players: 43 | Games Played: 354 | Avg Score: 50 | Last Updated: 09/24/2025 04:16:32PM</p>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <td>Position</td>
+                            <td>Name</td>
+                            <td>Games Won</td>
+                            <td>Games Lost</td>
+                            <td>Avg Score</td>
+                        </tr>
+                        <tr>
+                            <td>1st</td>
+                            <td>John Doe</td>
+                            <td>12</td>
+                            <td>2</td>
+                            <td>83</td>
+                        </tr>
+                        <tr>
+                            <td>2nd</td>
+                            <td>Jessie Terry</td>
+                            <td>11</td>
+                            <td>4</td>
+                            <td>75</td>
+                        </tr>
+                        <tr>
+                            <td>3rd</td>
+                            <td>Marry Beth</td>
+                            <td>10</td>
+                            <td>3</td>
+                            <td>72</td>
+                        </tr>
+                        <tr>
+                            <td>4th</td>
+                            <td>Tabith Kim</td>
+                            <td>9</td>
+                            <td>6</td>
+                            <td>67</td>
+                        </tr>
+                        <tr>
+                            <td>5th</td>
+                            <td>Jason Smith</td>
+                            <td>7</td>
+                            <td>7</td>
+                            <td>65</td>
+                        </tr>
+                        <tr class="user-row">
+                            <td>12th</td>
+                            <td>Ben (You)</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>24</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="global-stats">
+                    <h3>Global Stats</h3>
+                    <p><strong>Total Players:</strong> 43</p>
+                    <p><strong>Games Played:</strong> 354</p>
+                    <p><strong>Avg Score:</strong> 50</p>
+                    <p><strong>Last Updated:</strong> 09/24/2025 04:16:32 PM</p>
+                </div>
+            </div>
         </main>
 
         <footer>
-
             <div>
                 <p>Designed by Ben Haaga in 2025 for cs260</p>
                 <a href="https://github.com/benhaaga-svg/startup">Github Repository</a>
             </div>
-
         </footer>
-
-
     </body>
-
-
 </html>

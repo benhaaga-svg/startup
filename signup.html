@@ -5,38 +5,58 @@
         <link rel="icon" href="favcon.ico" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Track Your Bids</title>
-
+        <title>Track Your Bids - Sign Up</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="signup.css">
     </head>
     <body>
-
-        <header>
+        <header style="text-align: center;">
             <h1>Track Your Bids<sup>&reg;</sup></h1>
-
         </header>
 
-        <main>
-            <div><p>First Name: </p><input></input></div>
-            <div><p>Last Name: </p><input></input></div>
-            <div><p>Date of Birth: </p><input placeholder="MM/DD/YYYY"></input></div>
-            <div><p>Username: </p><input></input></div>
-            <div><p>Password: </p><input></input></div>
-            <div><p>Password Again: </p><input></input></div>
-            <button><a href="index.html">Sign up</a></button>
-            <button><a href="index.html">Go Back</a></button>
+        <main style="display: flex; justify-content: center; align-items: center;">
+            <div class="signup-container">
+                <h2>Create Account</h2>
+                <form>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" placeholder="John" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Create a password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary"><a href="home.html">Sign up</a></button>
+                        <button type="button" class="btn-secondary"><a href="index.html">Go Back</a></button>
+                    </div>
+                </form>
+            </div>
         </main>
 
         <footer>
-
             <div>
                 <p>Designed by Ben Haaga in 2025 for cs260</p>
                 <a href="https://github.com/benhaaga-svg/startup">Github Repository</a>
             </div>
-
         </footer>
-
-
     </body>
-
-
 </html>

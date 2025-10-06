@@ -1,0 +1,114 @@
+/* Profile page specific styles */
+
+.profile-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+.profile-section h3 {
+    color: #1a237e;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid #1a237e;
+    padding-bottom: 0.5rem;
+}
+
+.profile-section h4 {
+    color: #1a237e;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-section p {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.date-filter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.date-filter label {
+    color: #1a237e;
+    font-weight: 500;
+}
+
+.date-filter input {
+    padding: 0.6rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #333;
+}
+
+.date-filter input:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+}
+
+.date-filter button {
+    padding: 0.6rem 1.5rem;
+}
+
+.stats-table {
+    margin: 1.5rem 0;
+}
+
+.all-time-stats {
+    background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(57, 73, 171, 0.1));
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #1a237e;
+}
+
+.all-time-stats p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.logout-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        padding: 1.5rem;
+    }
+
+    .profile-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .profile-section h4 {
+        font-size: 1.2rem;
+    }
+
+    .date-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-filter input {
+        width: 100%;
+    }
+}

@@ -5,14 +5,13 @@
         <link rel="icon" href="favcon.ico" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Track Your Bids</title>
-
+        <title>Track Your Bids - Profile</title>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="profile.css">
     </head>
     <body>
-
         <header>
             <h1>Track Your Bids<sup>&reg;</sup></h1>
-
             <nav>
                 <menu>
                     <li><a href="home.html">Home</a></li>
@@ -24,44 +23,59 @@
         </header>
 
         <main>
-           <h3>My Info</h3>
-           <p>Name: Ben Haaga</p>
-           <p>Tracking started: 06/06/2025</p>
-           <h4>My Stats</h4>
-           <p>From: <textarea>03/03/2023</textarea> To: <textarea>06/22/2023</textarea></p>
-           <button>Search</button>
-           <table>
-                <tr>
-                    <td>Games Played</td>
-                    <td>Games Won</td>
-                    <td>Games Lost</td>
-                    <td>Avg Score</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>1</td>
-                    <td>4</td>
-                    <td>22</td>
-                </tr>
-           </table>
-           <h4>All-Time</h4>
-           <p>Global Standing: 12th | Games Played: 12 | W/L Ration: 2/12 | AVG Score: 24 | Last Played: 03/22/2025</p>
+            <div class="profile-container">
+                <div class="profile-section">
+                    <h3>My Info</h3>
+                    <p><strong>Name:</strong> Ben Haaga</p>
+                    <p><strong>Tracking started:</strong> 06/06/2025</p>
 
-            <button><a href="index.html">Logout</a></button>
+                    <h4>My Stats</h4>
+                    <div class="date-filter">
+                        <label for="dateFrom">From:</label>
+                        <input type="date" id="dateFrom" value="2023-03-03">
+                        <label for="dateTo">To:</label>
+                        <input type="date" id="dateTo" value="2023-06-22">
+                        <button class="btn-primary">Search</button>
+                    </div>
 
+                    <div class="stats-table">
+                        <table>
+                            <tr>
+                                <td>Games Played</td>
+                                <td>Games Won</td>
+                                <td>Games Lost</td>
+                                <td>Avg Score</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>1</td>
+                                <td>4</td>
+                                <td>22</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h4>All-Time</h4>
+                    <div class="all-time-stats">
+                        <p><strong>Global Standing:</strong> 12th</p>
+                        <p><strong>Games Played:</strong> 12</p>
+                        <p><strong>W/L Ratio:</strong> 2/12</p>
+                        <p><strong>AVG Score:</strong> 24</p>
+                        <p><strong>Last Played:</strong> 03/22/2025</p>
+                    </div>
+                </div>
+
+                <div class="logout-section">
+                    <button class="btn-secondary"><a href="index.html">Logout</a></button>
+                </div>
+            </div>
         </main>
 
         <footer>
-
             <div>
                 <p>Designed by Ben Haaga in 2025 for cs260</p>
                 <a href="https://github.com/benhaaga-svg/startup">Github Repository</a>
             </div>
-
         </footer>
-
-
     </body>
-
-
 </html>
