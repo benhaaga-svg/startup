@@ -12,8 +12,8 @@ export function Signup() {
             <div><p>Password: </p><input></input></div>
             <div><p>Password Again: </p><input></input></div>
             <div>
-            <button><a href="index.html">Sign up</a></button>
-            <button><a href="index.html">Go Back</a></button>
+                <button onClick={() => window.location.back()}>Login</button>
+                <button onClick={() => window.history.back()}>Go Back</button>
             </div>
             </div>
         </main>
