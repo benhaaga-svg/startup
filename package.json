@@ -1,0 +1,33 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "Track your bid is a means to track the overall performance of players of call your shot. Meant to allow players to see their history and the history of all other players. It will allow verified users to upload new game data.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benhaaga-svg/startup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/benhaaga-svg/startup/issues"
+  },
+  "homepage": "https://github.com/benhaaga-svg/startup#readme",
+  "devDependencies": {
+    "vite": "^7.1.9"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.2.0",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.3"
+  }
+}

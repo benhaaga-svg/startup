@@ -1,0 +1,64 @@
+import React from 'react';
+import './leaderboard.css';
+
+export function Leaderboard() {
+  return (
+    <main>
+              <h2>Leaderboard</h2>
+           <table>
+                <tr>
+                    <td>Name</td>
+                    <td>Position</td>
+                    <td>Games Won</td>
+                    <td>Games Lost</td>
+                    <td>Avg Score</td>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>1st</td>
+                    <td>12</td>
+                    <td>2</td>
+                    <td>83</td>
+                </tr>
+                <tr>
+                    <td>Jessie Terry</td>
+                    <td>2nd</td>
+                    <td>11</td>
+                    <td>4</td>
+                    <td>75</td>
+                </tr>
+                <tr>
+                    <td>Marry Beth</td>
+                    <td>3rd</td>
+                    <td>10</td>
+                    <td>3</td>
+                    <td>72</td>
+                </tr>
+                <tr>
+                    <td>Tabith Kim</td>
+                    <td>4th</td>
+                    <td>9</td>
+                    <td>6</td>
+                    <td>67</td>
+                </tr>
+                <tr>
+                    <td>Jason Smith</td>
+                    <td>5th</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td>65</td>
+                </tr>
+                <tr>
+                    <td>Ben (You)</td>
+                    <td>12th</td>
+                    <td>2</td>
+                    <td>10</td>
+                    <td>24</td>
+                </tr>
+           </table>
+
+           <h3>Global Stats</h3>
+           <p>Total Players: 43 | Games Played: 354 | Avg Score: 50 | Last Updated: 09/24/2025 04:16:32PM</p>
+        </main>
+  );
+}
