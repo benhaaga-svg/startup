@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Signup() {
+  const navigate = useNavigate();
+
   return (
     <main>
             <h1>Sign Up</h1>
-            <div class="sign-in-square">
+            <div className="sign-in-square">
             <div><p>First Name: </p><input></input></div>
             <div><p>Last Name: </p><input></input></div>
             <div><p>Date of Birth: </p><input placeholder="MM/DD/YYYY"></input></div>
@@ -12,8 +15,8 @@ export function Signup() {
             <div><p>Password: </p><input></input></div>
             <div><p>Password Again: </p><input></input></div>
             <div>
-                <button onClick={() => window.location.back()}>Login</button>
-                <button onClick={() => window.history.back()}>Go Back</button>
+                <button onClick={() => navigate('/home')}>Login</button>
+                <button onClick={() => navigate(-1)}>Go Back</button>
             </div>
             </div>
         </main>

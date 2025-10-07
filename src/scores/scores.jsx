@@ -1,8 +1,9 @@
 import React from 'react';
+import './scores.css';
 
 export function Scores() {
   return (
-    <main>
+    <main className="scores-main">
             <div class="search-area">
                 <label for="searchInput">Search:</label>
                 <input id="searchInput" />

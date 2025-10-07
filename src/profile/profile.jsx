@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './profile.css';
 
 export function Profile() {
+  const navigate = useNavigate();
+
   return (
-    <main>
+    <main className="profile-main">
            <h2>My Info</h2>
            <h4>My Stats</h4>
            <h5>From: <input placeholder="MM/DD/YYYY"></input> To: <input placeholder="MM/DD/YYYY"></input></h5>
@@ -13,9 +16,9 @@ export function Profile() {
            <h5>Global Standing: 12th | Games Played: 12 | W/L Ration: 2/12 | AVG Score: 24 | Last Played: 03/22/2025</h5>
 
            <div><p>Name: Ben Haaga | Tracking started: 06/06/2025</p></div>
-           
 
-            <button><a href="index.html">Logout</a></button>
+
+            <button onClick={() => navigate('/')}>Logout</button>
 
         </main>
   );

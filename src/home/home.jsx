@@ -3,7 +3,7 @@ import './home.css';
 
 export function Home() {
   return (
-    <main className="main">
+    <main className="home-main">
             <h2>About</h2>
             <div>
                 <h2>Track Your Bids</h2>

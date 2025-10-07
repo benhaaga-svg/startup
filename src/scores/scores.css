@@ -45,7 +45,7 @@
 	background: linear-gradient(90deg, #1e88e5 0%, #3949ab 100%);
 	transform: translateY(-2px) scale(1.04);
 }
-main {
+.scores-main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -93,7 +93,7 @@ tr:last-child td {
 	border-bottom: none;
 }
 
-main h3 {
+.scores-main h3 {
 	margin-top: 0.5rem;
 	font-family: 'Montserrat', sans-serif;
 	color: #1a237e;
@@ -101,15 +101,9 @@ main h3 {
 	font-weight: 700;
 }
 
-main p {
+.scores-main p {
 	font-family: 'Montserrat', sans-serif;
 	color: #283593;
 	font-size: 1.05rem;
 	margin-bottom: 2rem;
-}
-
-a{
-	color: #fff;
-	text-decoration: none;
-	font-weight: 500;
 }
