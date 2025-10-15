@@ -10,7 +10,6 @@ import { Profile } from './profile/profile';
 import { Home } from './home/home';
 import { AuthState } from './login/authState';
 import { Unauthenticated } from './login/unauthenticated';
-import { Logout } from './login/login';
 
 
 
@@ -18,8 +17,7 @@ import { Logout } from './login/login';
 export default function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const [signedIn, setSignedIn] = React.useState(localStorage.getItem('signedIn') ? true : false);
-  const currentAuthState = signedIn === true ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
   console.log(authState);
   return (
@@ -28,7 +26,7 @@ export default function App() {
 
     <BrowserRouter>
     <div className='div'>
-      <header className='header'>
+      {currentAuthState === AuthState.Authenticated && <header className='header'>
         <nav className='header-nav'>
           <menu className='header-nav-menu'>
             <li className='header-nav-li'>
@@ -56,25 +54,22 @@ export default function App() {
             <img className='header-img' src="/blank_user.png" alt="Profile"/>
           </NavLink>
         </div>
-      </header>
+      </header>}
 
       <Routes>
     <Route path='/' element={<Login
         userName={userName}
         authState={authState}
-        onAuthChange={(userName,authState) => 
+        onAuthChange={(userName,authState) =>
           {setAuthState(authState);
          setUserName(userName);}} />} exact />
     <Route path='/home' element={<Home />} />
-    <Route path='/logout' element={<Logout
-        userName={userName}
-        authState={authState}
-        onAuthChange={(userName,authState) => 
-          {setAuthState(authState);
-         setUserName(userName);}} />} exact />
     <Route path='/scores' element={<Scores />} />
     <Route path='/upload' element={<Upload />} />
-    <Route path='/profile' element={<Profile />} />
+    <Route path='/profile' element={<Profile
+        onAuthChange={(userName,authState) =>
+          {setAuthState(authState);
+         setUserName(userName);}} />} />
     <Route path='/leaderboard' element={<Leaderboard />} />
     <Route path='/signup' element={<Signup />} />
     <Route path='*' element={<NotFound />} />

@@ -1,9 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthState } from '../login/authState';
 import './profile.css';
 
-export function Profile() {
+export function Profile({ onAuthChange }) {
   const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("signedIn");
+    onAuthChange('', AuthState.Unauthenticated);
+    navigate('/');
+  }
 
   return (
     <main className="profile-main">
@@ -18,7 +26,7 @@ export function Profile() {
            <div><p>Name: Ben Haaga | Tracking started: 06/06/2025</p></div>
 
 
-            <button onClick={() => navigate('/')}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
 
         </main>
   );

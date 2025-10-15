@@ -10,21 +10,8 @@ export function Login({ userName, authState, onAuthChange }) {
   return (
     <main>
         {authState !== AuthState.Unknown && <h1>Track Your Bids</h1>}
-        {authState === AuthState.Unauthenticated && <Unauthenticated />}
+        {authState === AuthState.Unauthenticated && <Unauthenticated onAuthChange={onAuthChange}/>}
         {authState === AuthState.Authenticated && <Authenticated userName={userName} onAuthChange={onAuthChange} AuthState={AuthState} />}
-    </main>
-  );
-}
-
-
-export function Logout({ userName, authState, onAuthChange }) {
-  const navigate = useNavigate();
-
-  return (
-    <main>
-        {authState !== AuthState.Unknown && <h1>Track Your Bids</h1>}
-        {authState === AuthState.Unauthenticated && <Unauthenticated />}
-        {authState === AuthState.Authenticated && <Authenticated userName={userName} />}
     </main>
   );
 }
