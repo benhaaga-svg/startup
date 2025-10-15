@@ -8,12 +8,22 @@ import { Leaderboard } from './leaderboard/leaderboard';
 import { Upload } from './upload/upload';
 import { Profile } from './profile/profile';
 import { Home } from './home/home';
+import { AuthState } from './login/authState';
+import { Unauthenticated } from './login/unauthenticated';
+import { Logout } from './login/login';
+
 
 
 
 export default function App() {
-  return (
 
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const [signedIn, setSignedIn] = React.useState(localStorage.getItem('signedIn') ? true : false);
+  const currentAuthState = signedIn === true ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+  console.log(authState);
+  return (
+    
 
 
     <BrowserRouter>
@@ -24,9 +34,11 @@ export default function App() {
             <li className='header-nav-li'>
               <NavLink to="/">Login</NavLink>
             </li>
+            {authState === AuthState.Authenticated && (
             <li className='header-nav-li'>
               <NavLink to="/home">Home</NavLink>
             </li>
+            )}
             <li className='header-nav-li'>
               <NavLink to="/scores">Scores</NavLink>
             </li>
@@ -47,8 +59,19 @@ export default function App() {
       </header>
 
       <Routes>
-    <Route path='/' element={<Login />} exact />
+    <Route path='/' element={<Login
+        userName={userName}
+        authState={authState}
+        onAuthChange={(userName,authState) => 
+          {setAuthState(authState);
+         setUserName(userName);}} />} exact />
     <Route path='/home' element={<Home />} />
+    <Route path='/logout' element={<Logout
+        userName={userName}
+        authState={authState}
+        onAuthChange={(userName,authState) => 
+          {setAuthState(authState);
+         setUserName(userName);}} />} exact />
     <Route path='/scores' element={<Scores />} />
     <Route path='/upload' element={<Upload />} />
     <Route path='/profile' element={<Profile />} />
