@@ -218,22 +218,28 @@ p {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    margin-bottom: 0.5em;
+    margin-bottom: 0;
+}
+
+.sign-in-square div:has(button) {
+    justify-content: center;
 }
 
 .sign-in-square p {
     display: inline-block;
-    min-width: 80px;
+    min-width: 140px;
     margin: 0;
     font-size: 1.05rem;
     color: #e3e6f5;
     font-weight: 500;
+    text-align: right;
+    padding-right: 1em;
 }
 
 .sign-in-square input {
-    max-width: 75%;
-    margin-left: 0.5em;
-    margin-bottom: 0.5em;
+    flex: 1;
+    max-width: 250px;
+    margin: 0;
     transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
