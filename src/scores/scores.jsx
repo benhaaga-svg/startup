@@ -11,7 +11,7 @@ export function Scores() {
                     new gameStructure({id: 3, players: ['Loading...', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'], scores: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], datePlayed: 'Loading...'}),];
 
         const [loadingError, setLoadingError] = React.useState(false);
-        const [scores, setScores] = React.useState(loadingScores);
+        const [scores, setScores] = React.useState(JSON.parse(localStorage.getItem('scores')) || loadingScores);
         const [reload, setReload] = React.useState(0);
 
         const handleSearch = () => {
@@ -33,19 +33,23 @@ export function Scores() {
                     if (randomError) {
                         reject("Failed to fetch scores");
                     } else {
-                        resolve([
 
-
+                        if (localStorage.getItem('scores')) {
+                            resolve(JSON.parse(localStorage.getItem('scores')));
+                        } else {
+                            resolve([
                         new gameStructure({id: 1, players: ['James', 'Jeff', 'Mark', 'Davis', 'Tamie', 'Tate'], scores: [87, 80, 65, 60, 55, 54], datePlayed: '01/12/2023'}),
                         new gameStructure({id: 2, players: ['Sam', 'Janese', 'Juan', 'Smitty', 'Karry', 'N/A'], scores: [92, 90, 71, 62, 57, 'N/A'], datePlayed: '02/02/2023'}),
                         new gameStructure({id: 3, players: ['Hannah', 'Bryce', 'Colby', 'Sydnee', 'Faith', 'Carter'], scores: [101, 90, 65, 55, 50, 45], datePlayed: '02/12/2023'})
+                        
                     ]);
-                    }
+                    }}
                 }, 1000);
             });
 
             response.then(data => {
                 setScores(data);
+                localStorage.setItem('scores', JSON.stringify(data));
             }).catch(error => {
                 setLoadingError(true);
             });
