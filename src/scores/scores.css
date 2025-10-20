@@ -74,22 +74,33 @@ th, td {
 	font-size: 1.1rem;
 }
 
-tr:first-child td {
+thead {
 	background: linear-gradient(90deg, #1a237e 0%, #283593 100%);
+}
+
+thead th {
 	color: #fff;
 	font-weight: 700;
 	font-size: 1.15rem;
 }
 
-tr:nth-child(even):not(:first-child) td {
-	background: #f4f6fc;
+tbody tr:nth-child(odd) td {
+	background: #fff;
+	color: #1a237e;
+	font-weight: 400;
 }
 
-tr td {
+tbody tr:nth-child(even) td {
+	background: #f4f6fc;
+	color: #1a237e;
+	font-weight: 400;
+}
+
+tbody tr td {
 	border-bottom: 1px solid #e3e6f5;
 }
 
-tr:last-child td {
+tbody tr:last-child td {
 	border-bottom: none;
 }
 
