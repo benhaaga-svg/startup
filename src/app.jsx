@@ -29,9 +29,6 @@ export default function App() {
       {currentAuthState === AuthState.Authenticated && <header className='header'>
         <nav className='header-nav'>
           <menu className='header-nav-menu'>
-            <li className='header-nav-li'>
-              <NavLink to="/">Login</NavLink>
-            </li>
             {authState === AuthState.Authenticated && (
             <li className='header-nav-li'>
               <NavLink to="/home">Home</NavLink>
@@ -50,7 +47,7 @@ export default function App() {
         </nav>
         <div className='header-profile'>
           <NavLink to="/profile" className='header-profile-link'>
-            <span>Profile</span>
+            <span>{userName}</span>
             <img className='header-img' src="/blank_user.png" alt="Profile"/>
           </NavLink>
         </div>
@@ -70,7 +67,7 @@ export default function App() {
         onAuthChange={(userName,authState) =>
           {setAuthState(authState);
          setUserName(userName);}} />} />
-    <Route path='/leaderboard' element={<Leaderboard />} />
+    <Route path='/leaderboard' element={<Leaderboard userName={userName} />} />
     <Route path='/signup' element={<Signup />} />
     <Route path='*' element={<NotFound />} />
     </Routes>

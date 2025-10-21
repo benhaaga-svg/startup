@@ -2,9 +2,15 @@ import React from 'react';
 import './scores.css';
 import { data } from 'react-router-dom';
 import gameStructure, { game } from '../classes/game';
+import {globalStatsDisplay} from '../classes/globalStats';
 
 export function Scores() {
 
+
+        const [globalStats, setGlobalStats] = React.useState(() => { 
+            const stored = localStorage.getItem('globalStats');
+            return stored ? JSON.parse(stored) : null;
+        });
         const loadingScores = [
                     new gameStructure({id: 1, players: ['Loading...', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'], scores: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], datePlayed: 'Loading...'}),
                     new gameStructure({id: 2, players: ['Loading...', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'], scores: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], datePlayed: 'Loading...'}),
@@ -25,7 +31,10 @@ export function Scores() {
             // Reset to loading state
             setScores(loadingScores);
             setLoadingError(false);
-
+            if (!localStorage.getItem('globalStats')) {
+                setGlobalStats({totalPlayers: 42, totalGamesPlayed: 128, averageScore: 68, updatedAt: new Date()});
+                localStorage.setItem('globalStats', JSON.stringify({totalPlayers: 42, totalGamesPlayed: 128, averageScore: 68, updatedAt: new Date()}));
+            }
             // Create a new Promise each time the effect runs
             const randomError = Math.random() < 0.1; // 10% chance of error
             const response = new Promise((resolve, reject) => {
@@ -85,6 +94,7 @@ export function Scores() {
                 </tbody>
            </table>
            {loadingError && <p className="error-message">Failed to load scores. Please try again later.</p>}
+           {globalStats && globalStatsDisplay(globalStats)}
         </main>
   );
 }
