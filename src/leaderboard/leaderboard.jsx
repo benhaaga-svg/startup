@@ -27,8 +27,8 @@ export function Leaderboard({userName}) {
             reloadData();
 
             if (!localStorage.getItem('globalStats')) {
-                setGlobalStats({totalPlayers: 42, totalGamesPlayed: 128, averageScore: 68, updatedAt: new Date()});
-                localStorage.setItem('globalStats', JSON.stringify({totalPlayers: 42, totalGamesPlayed: 128, averageScore: 68, updatedAt: new Date()}));
+                setGlobalStats({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()});
+                localStorage.setItem('globalStats', JSON.stringify({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()}));
             }
 
     }, []);
@@ -55,7 +55,7 @@ export function Leaderboard({userName}) {
                 {name: 'Marry Beth', position: '3rd', gamesWon: 10, gamesLost: 3, avgScore: 72},
                 {name: 'Tabith Kim', position: '4th', gamesWon: 9, gamesLost: 6, avgScore: 67},
                 {name: 'Jason Smith', position: '5th', gamesWon: 7, gamesLost: 7, avgScore: 65},
-                {name: `${userName} (You)`, position: '12th', gamesWon: 2, gamesLost: 10, avgScore: 24},
+                {name: `${userName} (You)`, position: 'N/A', gamesWon: 0, gamesLost: 0, avgScore: 0},
             ]);
             const currentTime = new Date().toLocaleString();
             setLastLoadTime(currentTime);
