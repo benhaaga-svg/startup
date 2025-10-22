@@ -9,31 +9,31 @@
 .search-area label {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 500;
-	color: #1a237e;
+	color: var(--primary-color);
 	font-size: 1.1rem;
 	margin-right: 0.5em;
 }
 .search-area input {
 	padding: 0.6em 1em;
 	border-radius: 6px;
-	border: 1px solid #3949ab;
+	border: 1px solid var(--accent-color);
 	font-size: 1rem;
 	font-family: 'Montserrat', sans-serif;
 	margin-right: 0.5em;
-	background: #f4f6fc;
-	color: #1a237e;
+	background: var(--bg-light);
+	color: var(--primary-color);
 	outline: none;
 	transition: border 0.2s;
 }
 .search-area input:focus {
-	border: 1.5px solid #1e88e5;
+	border: 1.5px solid var(--accent-light);
 }
 .search-area button {
 	padding: 0.6em 1.5em;
 	border-radius: 8px;
 	border: none;
-	background: linear-gradient(90deg, #3949ab 0%, #1e88e5 100%);
-	color: #fff;
+	background: linear-gradient(90deg, var(--accent-color) 0%, var(--accent-light) 100%);
+	color: var(--text-white);
 	font-size: 1.05rem;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 600;
@@ -42,7 +42,7 @@
 	transition: background 0.2s, transform 0.2s;
 }
 .search-area button:hover {
-	background: linear-gradient(90deg, #1e88e5 0%, #3949ab 100%);
+	background: linear-gradient(90deg, var(--accent-light) 0%, var(--accent-color) 100%);
 	transform: translateY(-2px) scale(1.04);
 }
 .scores-main {
@@ -51,7 +51,7 @@
 	align-items: center;
 	justify-content: flex-start;
 	min-height: calc(100vh - 160px);
-	background: #f4f6fc;
+	background: var(--bg-light);
 	padding-top: 2rem;
 }
 
@@ -60,7 +60,7 @@ table {
 	border-spacing: 0;
 	width: 90vw;
 	max-width: 800px;
-	background: #fff;
+	background: var(--bg-white);
 	border-radius: 16px;
 	box-shadow: 0 4px 24px rgba(26,35,126,0.10);
 	margin-bottom: 2rem;
@@ -75,29 +75,29 @@ th, td {
 }
 
 thead {
-	background: linear-gradient(90deg, #1a237e 0%, #283593 100%);
+	background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
 }
 
 thead th {
-	color: #fff;
+	color: var(--text-white);
 	font-weight: 700;
 	font-size: 1.15rem;
 }
 
 tbody tr:nth-child(odd) td {
-	background: #fff;
-	color: #1a237e;
+	background: var(--bg-white);
+	color: var(--primary-color);
 	font-weight: 400;
 }
 
 tbody tr:nth-child(even) td {
-	background: #f4f6fc;
-	color: #1a237e;
+	background: var(--bg-light);
+	color: var(--primary-color);
 	font-weight: 400;
 }
 
 tbody tr td {
-	border-bottom: 1px solid #e3e6f5;
+	border-bottom: 1px solid var(--text-light);
 }
 
 tbody tr:last-child td {
@@ -107,14 +107,14 @@ tbody tr:last-child td {
 .scores-main h3 {
 	margin-top: 0.5rem;
 	font-family: 'Montserrat', sans-serif;
-	color: #1a237e;
+	color: var(--primary-color);
 	font-size: 1.3rem;
 	font-weight: 700;
 }
 
 .scores-main p {
 	font-family: 'Montserrat', sans-serif;
-	color: #283593;
+	color: var(--primary-light);
 	font-size: 1.05rem;
 	margin-bottom: 2rem;
 }

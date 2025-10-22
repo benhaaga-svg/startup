@@ -7,8 +7,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #e3e6f5;
-    border: 2px dashed #3949ab;
+    background: var(--text-light);
+    border: 2px dashed var(--accent-color);
     border-radius: 12px;
     padding: 1.5rem 2rem;
     margin: 1.2rem 0;
@@ -22,11 +22,11 @@
     object-fit: contain;
     border-radius: 8px;
     margin-top: 1rem;
-    background: #fff;
+    background: var(--bg-white);
     box-shadow: 0 1px 4px rgba(26,35,126,0.10);
 }
 .upload-image-area p {
-    color: #1a237e;
+    color: var(--primary-color);
     font-family: 'Montserrat', sans-serif;
     font-size: 1.05rem;
     margin: 0;
@@ -34,11 +34,11 @@
 }
 
 .sign-in-square {
-    background: linear-gradient(135deg, #1a237e 0%, #283593 100%); /* Modern dark blue gradient */
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); /* Modern dark blue gradient */
     border-radius: 20px;
     padding: 3rem 2.5rem;
     box-shadow: 0 8px 32px rgba(26,35,126,0.18);
-    color: #fff;
+    color: var(--text-white);
     min-width: 350px;
     display: flex;
     flex-direction: column;
