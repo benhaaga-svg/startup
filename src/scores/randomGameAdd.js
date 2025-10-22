@@ -13,7 +13,7 @@ class simulateGameAdd {
         }
         this.intervalId = setInterval(() => {
             this.addRandomGame();
-        }, 33000); // Simulate every 33 seconds
+        }, 15000); // Simulate every 15 seconds
         console.log("Game simulator started");
     }
 
