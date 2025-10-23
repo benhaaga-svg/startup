@@ -99,3 +99,151 @@ Handling the toggling of the checkboxes was particularly interesting.
   ))}
 </div>
 ```
+
+# Web Dev Cheat Sheet (HTML, CSS, JS, Console, DNS)
+
+## HTML Basics
+- `<link>` → Connects external resource (usually CSS).  
+  Example: `<link rel="stylesheet" href="style.css">`
+- `<div>` → Block-level container for grouping content.
+- `<span>` → Inline container for styling text (`display: inline` by default).
+- **Basic tags**
+  - Paragraph → `<p>`
+  - Ordered list → `<ol>`
+  - Unordered list → `<ul>`
+  - Headings → `<h1>`, `<h2>`, `<h3>`, etc.
+- **Declare HTML doc type:** `<!DOCTYPE html>`
+- **Image hyperlink:**
+  ```html
+  <a href="https://example.com"><img src="pic.jpg" alt="Example"></a>
+  ```
+
+---
+
+## CSS Basics
+- `#id` → Select by ID (`#title`)
+- `.class` → Select by class (`.grid`)
+- Example: `div { background-color: red; }` → All divs red
+- **Padding vs Margin**
+  - Padding = space *inside* border (content → border)
+  - Margin = space *outside* border (border → next element)
+- **Box Model (inside → out):**
+  - Content → Padding → Border → Margin
+- **Padding shorthand:**
+  `padding: top right bottom left;`
+- **Flexbox images:**  
+  `display: flex;` → arranges items in a row by default
+- **Set specific text color:**
+  ```css
+  .green { color: green; }
+  ```
+
+---
+
+## JavaScript Basics
+- **Arrow function**
+  ```js
+  const add = (a, b) => a + b;
+  ```
+- **Array map**
+  ```js
+  [1,2,3].map(x => x * 2); // [2,4,6]
+  ```
+- **getElementById + addEventListener**
+  ```js
+  document.getElementById("btn").addEventListener("click", () => console.log("Clicked!"));
+  ```
+- **querySelector**
+  ```js
+  document.querySelector("#id");
+  ```
+- **Change color**
+  ```js
+  document.getElementById("byu").style.color = "green";
+  ```
+- **Change text**
+  ```js
+  document.getElementById("bird").textContent = "crow";
+  ```
+
+---
+
+## JS Syntax Examples
+```js
+if (x > 0) { ... } else { ... }
+for (let i=0; i<3; i++) console.log(i); // 0,1,2
+while (condition) { ... }
+switch(value) { case 1: ...; break; }
+```
+
+- **Create object**
+  ```js
+  let person = { name: "Ben", age: 20 };
+  ```
+- **Add property**
+  ```js
+  person.job = "Developer";
+  ```
+- **Include JS in HTML**
+  ```html
+  <script src="script.js"></script>
+  ```
+- **Promise example**
+  ```js
+  Promise.resolve("done").then(res => console.log(res)); // done
+  ```
+
+---
+
+##  DOM Notes
+- DOM = Document Object Model (tree of nodes)
+- JS can modify structure, content, and styles
+- Changes appear instantly in browser
+
+---
+
+## JSON
+- JSON = JavaScript Object Notation
+- Text-based format for key-value data
+  ```json
+  { "name": "Alice", "age": 25 }
+  ```
+
+---
+
+## Console / Terminal Commands
+
+| Command | Description |
+|----------|--------------|
+| `pwd` | Print working directory |
+| `cd` | Change directory |
+| `ls` | List files |
+| `ls -la` | Show all files (incl. hidden) with details |
+| `mkdir` | Make directory |
+| `mv` | Move or rename files |
+| `rm` | Remove file |
+| `chmod` | Change permissions |
+| `man` | Show manual/help |
+| `ps` | Show running processes |
+| `ssh` | Remote shell session |
+| `wget` | Download files |
+| `vim` / `nano` | Text editors |
+| `sudo` | Run command as superuser |
+
+---
+
+## DNS / HTTPS / Ports
+- Example: `banana.fruit.bozo.click`
+  - **TLD:** `.click`
+  - **Root domain:** `bozo.click`
+  - **Subdomains:** `fruit.bozo.click`, `banana.fruit.bozo.click`
+- HTTPS requires a valid **SSL/TLS certificate**
+- **DNS A record:** Points to IP address (not another A record)
+- **Ports**
+  - 80 → HTTP  
+  - 443 → HTTPS  
+  - 22 → SSH
+
+---
+
+
