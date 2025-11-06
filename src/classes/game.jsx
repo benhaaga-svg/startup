@@ -27,3 +27,5 @@ export function game(gameInfo) {
                     <td>{gameInfo.datePlayed}</td>
                 </tr>)
 } 
+
+

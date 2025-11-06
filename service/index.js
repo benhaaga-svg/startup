@@ -8,11 +8,7 @@ const app = express();
 const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
-let users = [ {
-    userName: 'a',
-    password: '$2b$10$OYVj4l4nUmTk5vrKNbbL4u4g/g271xA7TQUDCvNdcjc2J4JDLk7qC',
-    token: '8bd79524-cacf-4c0d-a029-bf844f4b8b82'
-  }];
+let users = [];
 
 let leaderBoard = [{name: 'John Doe', position: '1st', gamesWon: 12, gamesLost: 2, avgScore: 83},
                 {name: 'Jessie Terry', position: '2nd', gamesWon: 11, gamesLost: 4, avgScore: 75},
