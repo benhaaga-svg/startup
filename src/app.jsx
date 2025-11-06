@@ -55,11 +55,13 @@ export default function App() {
 
       <Routes>
     <Route path='/' element={<Login
-        userName={userName}
-        authState={authState}
-        onAuthChange={(userName,authState) =>
-          {setAuthState(authState);
-         setUserName(userName);}} />} exact />
+                userName={userName}
+                authState={authState}
+                onAuthChange={(userName, authState) => {
+                  setAuthState(authState);
+                  setUserName(userName);
+                }}
+              />}/>
     <Route path='/home' element={<Home />} />
     <Route path='/scores' element={<Scores />} />
     <Route path='/upload' element={<Upload />} />
@@ -68,7 +70,10 @@ export default function App() {
           {setAuthState(authState);
          setUserName(userName);}} />} />
     <Route path='/leaderboard' element={<Leaderboard userName={userName} />} />
-    <Route path='/signup' element={<Signup />} />
+    <Route path='/signup' element={<Signup userName={userName} onLogin={(userName) => {
+                  setAuthState(AuthState.Authenticated);
+                  setUserName(userName);
+                }} />} />
     <Route path='*' element={<NotFound />} />
     </Routes>
 

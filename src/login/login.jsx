@@ -10,8 +10,13 @@ export function Login({ userName, authState, onAuthChange }) {
   return (
     <main>
         {authState !== AuthState.Unknown && <h1>Track Your Bids</h1>}
-        {authState === AuthState.Unauthenticated && <Unauthenticated onAuthChange={onAuthChange}/>}
-        {authState === AuthState.Authenticated && <Authenticated userName={userName} onAuthChange={onAuthChange} AuthState={AuthState} />}
+        {authState === AuthState.Unauthenticated && <Unauthenticated
+            userName={userName}
+            onLogin={(loginUserName) => {
+              onAuthChange(loginUserName, AuthState.Authenticated);
+            }}
+          />}
+        {authState === AuthState.Authenticated && <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />}
     </main>
   );
 }

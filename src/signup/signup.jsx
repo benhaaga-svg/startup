@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function Signup() {
+export function Signup(props) {
   const navigate = useNavigate();
   const [errors, setErrors] = React.useState({
     firstName: false,
@@ -36,9 +36,37 @@ export function Signup() {
     // Check if any errors exist
     const hasErrors = Object.values(newErrors).some(error => error);
 
+
+  async function createUser() {
+    createUserCall(`/api/auth/create`);
+  }
+  
+
+
+  async function createUserCall(endpoint) {
+    const response = await fetch(endpoint, {
+      method: 'post',
+      body: JSON.stringify({ userName: username, password: password, firstName: firstName, lastName: lastName, dob: dob }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    if (response?.status === 200) {
+      localStorage.setItem('userName', username);
+      console.log("Logging in user after signup:", username);
+      props.onLogin(username);
+    } else {
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
+    }
+  }
+
+
+
+
     if (!hasErrors) {
-      localStorage.setItem("userName", username);
-      navigate(-1);
+       createUser()
+      .finally(() => navigate("/"))
     } else {
       setShowErrorMessage(true);
     }
@@ -96,7 +124,7 @@ export function Signup() {
           <div id="error-message">Please make sure all fields are filled out correctly</div>
         )}
         <div>
-          <button onClick={createUser}>Sign Up</button>
+          <button onClick={() => createUser()}>Sign Up</button>
           <button onClick={() => navigate(-1)}>Go Back</button>
         </div>
       </div>
