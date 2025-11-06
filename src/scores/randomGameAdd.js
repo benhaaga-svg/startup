@@ -33,15 +33,34 @@ class simulateGameAdd {
         async function generateScores() {
             const players = ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"];
             const scores = [];
-        for (let i = 0; i < numPlayers; i++) {
 
-            const response = await fetch('https://randomuser.me/api/');
-            const data = await response.json();
-            const firstName = data.results[0].name.first;
-            players[i] = firstName;
-            console.log("Generated player:", firstName);
-            scores.push(Math.floor(Math.random() * 50)+50);
-        }
+            // Fetch multiple users in one request
+            const response = await fetch(`/api/randomuser?results=${numPlayers}`);
+            if (!response.ok) {
+                console.error("Failed to fetch random users:", response.status);
+                // Use fallback names
+                for (let i = 0; i < numPlayers; i++) {
+                    players[i] = "Player " + (i + 1);
+                    scores.push(Math.floor(Math.random() * 50)+50);
+                }
+            } else {
+                const data = await response.json();
+                if (data.results && data.results.length >= numPlayers) {
+                    for (let i = 0; i < numPlayers; i++) {
+                        const firstName = data.results[i].name.first;
+                        players[i] = firstName;
+                        console.log("Generated player:", firstName);
+                        scores.push(Math.floor(Math.random() * 50)+50);
+                    }
+                } else {
+                    console.error("Invalid response format or insufficient results:", data);
+                    // Use fallback names
+                    for (let i = 0; i < numPlayers; i++) {
+                        players[i] = "Player " + (i + 1);
+                        scores.push(Math.floor(Math.random() * 50)+50);
+                    }
+                }
+            }
 
         // Pad arrays to 6 players if needed
         while (scores.length < 6) {
@@ -67,7 +86,15 @@ class simulateGameAdd {
         existingScores.push(newGame);
 
         // Save back to localStorage
-        localStorage.setItem('scores', JSON.stringify(existingScores));
+        fetch('/api/score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newGame)
+        }).then(response => {
+            if (response.ok) {
+                localStorage.setItem('scores', JSON.stringify(existingScores));
+            }
+        });
 
         // Update global stats with the new game
         const currentStats = localStorage.getItem('globalStats')

@@ -2,12 +2,17 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
+const https = require('https');
 const app = express();
 
 const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
+let users = [ {
+    userName: 'a',
+    password: '$2b$10$OYVj4l4nUmTk5vrKNbbL4u4g/g271xA7TQUDCvNdcjc2J4JDLk7qC',
+    token: '8bd79524-cacf-4c0d-a029-bf844f4b8b82'
+  }];
 let scores = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -26,6 +31,9 @@ app.use(express.static('public'));
 // Router for service endpoints
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
+
+
+
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
@@ -76,7 +84,7 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
+apiRouter.get('/scores', (_req, res) => {
   res.send(scores);
 });
 
@@ -84,6 +92,31 @@ apiRouter.get('/scores', verifyAuth, (_req, res) => {
 apiRouter.post('/score', verifyAuth, (req, res) => {
   scores = updateScores(req.body);
   res.send(scores);
+});
+
+// GetRandomUser - Proxy endpoint for randomuser.me API
+apiRouter.get('/randomuser', verifyAuth, (req, res) => {
+  const results = req.query.results || 1;
+  const url = `https://randomuser.me/api/?results=${results}`;
+
+  https.get(url, (response) => {
+    let data = '';
+
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      try {
+        const jsonData = JSON.parse(data);
+        res.send(jsonData);
+      } catch (error) {
+        res.status(500).send({ msg: 'Failed to parse response', error: error.message });
+      }
+    });
+  }).on('error', (error) => {
+    res.status(500).send({ msg: 'Failed to fetch random user', error: error.message });
+  });
 });
 
 // Default error handler

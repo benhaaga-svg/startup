@@ -33,27 +33,28 @@ export function Scores() {
                 setGlobalStats({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()});
                 localStorage.setItem('globalStats', JSON.stringify({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()}));
             }
-            // Create a new Promise each time the effect runs
-            const randomError = Math.random() < 0.1; // 10% chance of error
-            const response = new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    if (randomError) {
-                        reject("Failed to fetch scores");
-                    } else {
 
-                        if (localStorage.getItem('scores')) {
-                            resolve(JSON.parse(localStorage.getItem('scores')));
-                        }
+            // Fetch scores from the API
+            fetch('/api/scores')
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch scores');
                     }
-                }, 1000);
-            });
-
-            response.then(data => {
-                setScores(data);
-                localStorage.setItem('scores', JSON.stringify(data));
-            }).catch(error => {
-                setLoadingError(true);
-            });
+                    return response.json();
+                })
+                .then((data) => {
+                    setScores(data);
+                    localStorage.setItem('scores', JSON.stringify(data));
+                })
+                .catch(error => {
+                    console.error('Error fetching scores:', error);
+                    setLoadingError(true);
+                    // Fallback to localStorage if API fails
+                    const localScores = localStorage.getItem('scores');
+                    if (localScores) {
+                        setScores(JSON.parse(localScores));
+                    }
+                });
         }, [reload]);
 
         // Start the game simulator and listen for storage changes
