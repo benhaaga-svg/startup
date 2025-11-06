@@ -75,14 +75,14 @@ export function Scores() {
             };
 
             // Start the simulator (only once due to singleton pattern)
-            // randomGameAdder.start();
+            randomGameAdder.start();
 
-            // window.addEventListener('storage', handleStorageChange);
-            // return () => {
-            //     window.removeEventListener('storage', handleStorageChange);
-            //     // Stop simulator when component unmounts
-            //     randomGameAdder.stop();
-            // };
+            window.addEventListener('storage', handleStorageChange);
+            return () => {
+                window.removeEventListener('storage', handleStorageChange);
+                // Stop simulator when component unmounts
+                randomGameAdder.stop();
+            };
         }, [loadingError]);
 
 
