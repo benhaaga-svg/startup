@@ -75,14 +75,14 @@ export function Scores() {
             };
 
             // Start the simulator (only once due to singleton pattern)
-            randomGameAdder.start();
+            // randomGameAdder.start();
 
-            window.addEventListener('storage', handleStorageChange);
-            return () => {
-                window.removeEventListener('storage', handleStorageChange);
-                // Stop simulator when component unmounts
-                randomGameAdder.stop();
-            };
+            // window.addEventListener('storage', handleStorageChange);
+            // return () => {
+            //     window.removeEventListener('storage', handleStorageChange);
+            //     // Stop simulator when component unmounts
+            //     randomGameAdder.stop();
+            // };
         }, [loadingError]);
 
 
@@ -103,11 +103,17 @@ export function Scores() {
                     </tr>
                 </thead>
                 <tbody>
-                    {scores.map((gameData) => (
-                        <React.Fragment key={gameData.id}>
-                            {game(gameData)}
-                        </React.Fragment>
-                    ))}
+                    {scores.length === 0 ? (
+                        <tr>
+                            <td colSpan="8">No scores available</td>
+                        </tr>
+                    ) : (
+                        scores.map((gameData) => (
+                            <React.Fragment key={gameData.id}>
+                                {game(gameData)}
+                            </React.Fragment>
+                        ))
+                    )}
                 </tbody>
            </table>
            {loadingError && <div><p className="error-message">Failed to load scores. Please try again later.</p> <button onClick={() => setReload(reload + 1)}>Retry</button></div>}

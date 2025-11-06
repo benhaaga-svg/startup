@@ -90,7 +90,7 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', (_req, res) => {
+apiRouter.get('/scores', verifyAuth,(_req, res) => {
   res.send(scores);
 });
 
