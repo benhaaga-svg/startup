@@ -44,23 +44,20 @@ export function Leaderboard({userName}) {
         {name: `${userName} (You)`, position: 'Loading', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},]);
 
         // Simulate data fetch
-        setTimeout(() => {
-            if (Math.random() < 0.1) { // 10% chance of error
-                setLoadingError(true);
-                return;
-            }
-            setLeaderboardData([
-                {name: 'John Doe', position: '1st', gamesWon: 12, gamesLost: 2, avgScore: 83},
-                {name: 'Jessie Terry', position: '2nd', gamesWon: 11, gamesLost: 4, avgScore: 75},
-                {name: 'Marry Beth', position: '3rd', gamesWon: 10, gamesLost: 3, avgScore: 72},
-                {name: 'Tabith Kim', position: '4th', gamesWon: 9, gamesLost: 6, avgScore: 67},
-                {name: 'Jason Smith', position: '5th', gamesWon: 7, gamesLost: 7, avgScore: 65},
-                {name: `${userName} (You)`, position: 'N/A', gamesWon: 0, gamesLost: 0, avgScore: 0},
-            ]);
-            const currentTime = new Date().toLocaleString();
-            setLastLoadTime(currentTime);
-            localStorage.setItem('leaderboardLastLoadTime', currentTime);
-        }, 5000);
+            fetch('/api/leaderboard')
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch leaderboard');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setLeaderboardData(data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching leaderboard data:', error);
+                    setLoadingError(true);
+                });
     }
 
     return (

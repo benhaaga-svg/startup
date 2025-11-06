@@ -13,6 +13,14 @@ let users = [ {
     password: '$2b$10$OYVj4l4nUmTk5vrKNbbL4u4g/g271xA7TQUDCvNdcjc2J4JDLk7qC',
     token: '8bd79524-cacf-4c0d-a029-bf844f4b8b82'
   }];
+
+let leaderBoard = [{name: 'John Doe', position: '1st', gamesWon: 12, gamesLost: 2, avgScore: 83},
+                {name: 'Jessie Terry', position: '2nd', gamesWon: 11, gamesLost: 4, avgScore: 75},
+                {name: 'Marry Beth', position: '3rd', gamesWon: 10, gamesLost: 3, avgScore: 72},
+                {name: 'Tabith Kim', position: '4th', gamesWon: 9, gamesLost: 6, avgScore: 67},
+                {name: 'Jason Smith', position: '5th', gamesWon: 7, gamesLost: 7, avgScore: 65},
+                {name: `(You)`, position: 'N/A', gamesWon: 0, gamesLost: 0, avgScore: 0}]
+
 let scores = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -20,7 +28,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
-app.use((req,res,next)=>{console.log(users); next();});
+app.use((req,res,next)=>{console.log(""); next();});
 
 // Use the cookie parser middleware for tracking authentication tokens
 app.use(cookieParser());
@@ -39,12 +47,10 @@ app.use(`/api`, apiRouter);
 apiRouter.post('/auth/create', async (req, res) => {
   if (await findUser('userName', req.body.userName)) {
     res.status(409).send({ msg: 'Existing user' });
-    console.log("User already exists");
   } else {
     const user = await createUser(req.body.userName, req.body.password);
 
     setAuthCookie(res, user.token);
-    console.log("Created user:", user.token);
     res.send({ userName: user.userName });
   }
 });
@@ -92,6 +98,13 @@ apiRouter.get('/scores', (_req, res) => {
 apiRouter.post('/score', verifyAuth, (req, res) => {
   scores = updateScores(req.body);
   res.send(scores);
+});
+
+
+
+apiRouter.get('/leaderboard', verifyAuth, (_req, res) => {
+  console.log("Leaderboard requested");
+  res.send(leaderBoard);
 });
 
 // GetRandomUser - Proxy endpoint for randomuser.me API
