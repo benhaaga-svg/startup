@@ -23,11 +23,11 @@ export function Signup(props) {
 
     // Validate each field
     const newErrors = {
-      firstName: firstName === "",
-      lastName: lastName === "",
+      firstName: firstName === "" && firstName.length >= 3 && /^[a-zA-Z]+$/.test(firstName),
+      lastName: lastName === "" && lastName.length >= 3 && /^[a-zA-Z]+$/.test(lastName),
       dob: !dob.match(/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/),
-      username: username === "",
-      password: password === "",
+      username: username === "" && username.length >= 3 && /^[a-zA-Z0-9]+$/.test(username),
+      password: password === "" && password.length >= 6 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password),
       passwordAgain: passwordAgain === "" || password !== passwordAgain
     };
 
@@ -44,6 +44,8 @@ export function Signup(props) {
 
 
   async function createUserCall(endpoint) {
+    
+    
     const response = await fetch(endpoint, {
       method: 'post',
       body: JSON.stringify({ userName: username, password: password, firstName: firstName, lastName: lastName, dob: dob }),
