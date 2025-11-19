@@ -49,23 +49,26 @@ export function Leaderboard({userName}) {
     <main className="leaderboard-main">
               <h2>Leaderboard</h2>
            <table>
-                <tr>
-                    <td>Name</td>
-                    <td>Position</td>
-                    <td>Games Won</td>
-                    <td>Games Lost</td>
-                    <td>Avg Score</td>
-                </tr>
-                
-                {leaderboardData.map((player, index) => (
-                    <tr key={index}>
-                        <td>{player.name}</td>
-                        <td>{player.position}</td>
-                        <td>{player.gamesWon}</td>
-                        <td>{player.gamesLost}</td>
-                        <td>{player.avgScore}</td>
-                </tr>
-                ))}
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Games Won</th>
+                        <th>Games Lost</th>
+                        <th>Avg Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {leaderboardData.map((player, index) => (
+                        <tr key={index}>
+                            <td>{player.name}</td>
+                            <td>{player.position}</td>
+                            <td>{player.gamesWon}</td>
+                            <td>{player.gamesLost}</td>
+                            <td>{player.avgScore}</td>
+                        </tr>
+                    ))}
+                </tbody>
            </table>
             {loadingError && <div><p className="error">Error loading leaderboard data. Please try again later.</p><button onClick={reloadData}>Retry</button></div>}
 
