@@ -96,6 +96,7 @@ export function Signup(props) {
           <p>Date of Birth:</p>
           <input
             placeholder="MM/DD/YYYY"
+            type='date'
             className={errors.dob ? 'error' : ''}
           />
         </div>
