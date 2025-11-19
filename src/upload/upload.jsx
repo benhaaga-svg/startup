@@ -6,7 +6,7 @@ export function Upload() {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
   const [scores, setScores] = React.useState(['', '', '', '', '', '']);
   const [datePlayed, setDatePlayed] = React.useState('');
-  const [gameName, setGameName] = React.useState('');
+  const [roundsPlayed, setRoundsPlayed] = React.useState('');
   const [gameSheet, setGameSheet] = React.useState(null);
   const [errors, setErrors] = React.useState({
     datePlayed: false,
@@ -16,7 +16,7 @@ export function Upload() {
     player4Score: false,
     player5Score: false,
     player6Score: false,
-    
+    roundsPlayed: false
   });
 
  
@@ -62,13 +62,16 @@ export function Upload() {
       player4Score: false,
       player5Score: false,
       player6Score: false,
+      roundsPlayed: false
     };
 
     // Validate required fields
     if (!datePlayed) {
       newErrors.datePlayed = true;
     }
-
+    if (!roundsPlayed || isNaN(parseInt(roundsPlayed)) || parseInt(roundsPlayed) < 4 || parseInt(roundsPlayed) > 13) {
+      newErrors.roundsPlayed = true;
+    }
     // Validate that each player has a corresponding score
     for (let i = 0; i < players.length; i++) {
       if (players[i] && players[i].trim() !== '' && (!scores[i] || scores[i].trim() === '')) {
@@ -100,7 +103,8 @@ export function Upload() {
       players: players.map(p => p || 'N/A'),
       scores: scores.map(s => s || 'N/A'),
       datePlayed: datePlayed,
-      sheet: gameSheet ? gameSheet.name : null
+      sheet: gameSheet ? gameSheet.name : null,
+      roundsPlayed: roundsPlayed
     });
 
     try {
@@ -122,7 +126,7 @@ export function Upload() {
         setPlayers(['', '', '', '', '', '']);
         setScores(['', '', '', '', '', '']);
         setDatePlayed('');
-        setGameName('');
+        setRoundsPlayed('');
         setGameSheet(null);
         setErrors({
           datePlayed: false,
@@ -148,13 +152,13 @@ export function Upload() {
      <main>
            <h2>Upload a game</h2>
            <div className="sign-in-square">
-           <div className={errors.player1Score === true ? "error" : ""}><p>Player 1: </p><input value={players[0]} onChange={(e) => handlePlayerChange(0, e.target.value)}></input><p>Player 1 Score: </p><input value={scores[0]} onChange={(e) => handleScoreChange(0, e.target.value)}></input></div>
-           <div className={errors.player2Score === true ? "error" : ""}><p>Player 2: </p><input value={players[1]} onChange={(e) => handlePlayerChange(1, e.target.value)}></input><p>Player 2 Score: </p><input value={scores[1]} onChange={(e) => handleScoreChange(1, e.target.value)}></input></div>
-           <div className={errors.player3Score === true ? "error" : ""}><p>Player 3: </p><input value={players[2]} onChange={(e) => handlePlayerChange(2, e.target.value)}></input><p>Player 3 Score: </p><input value={scores[2]} onChange={(e) => handleScoreChange(2, e.target.value)}></input></div>
-           <div className={errors.player4Score === true ? "error" : ""}><p>Player 4: </p><input value={players[3]} onChange={(e) => handlePlayerChange(3, e.target.value)}></input><p>Player 4 Score: </p><input value={scores[3]} onChange={(e) => handleScoreChange(3, e.target.value)}></input></div>
-           <div className={errors.player5Score === true ? "error" : ""}><p>Player 5: </p><input value={players[4]} onChange={(e) => handlePlayerChange(4, e.target.value)}></input><p>Player 5 Score: </p><input value={scores[4]} onChange={(e) => handleScoreChange(4, e.target.value)}></input></div>
-           <div className={errors.player6Score === true ? "error" : ""}><p>Player 6: </p><input value={players[5]} onChange={(e) => handlePlayerChange(5, e.target.value)}></input><p>Player 6 Score: </p><input value={scores[5]} onChange={(e) => handleScoreChange(5, e.target.value)}></input></div>
-           <div className={errors.datePlayed === true ? "error" : ""}><p>Date played:* </p><input value={datePlayed} onChange={(e) => { setDatePlayed(e.target.value); if (e.target.value) setErrors(prev => ({ ...prev, datePlayed: false })); }}></input><p>Game Name: </p><input value={gameName} onChange={(e) => setGameName(e.target.value)}></input></div>
+           <div className={errors.player1Score === true ? "error" : ""}><p>Player 1: </p><input value={players[0]} onChange={(e) => handlePlayerChange(0, e.target.value)}></input><p>Player 1 Score: </p><input value={scores[0]} onChange={(e) => handleScoreChange(0, e.target.value)} type="number"></input></div>
+           <div className={errors.player2Score === true ? "error" : ""}><p>Player 2: </p><input value={players[1]} onChange={(e) => handlePlayerChange(1, e.target.value)}></input><p>Player 2 Score: </p><input value={scores[1]} onChange={(e) => handleScoreChange(1, e.target.value)} type="number"></input></div>
+           <div className={errors.player3Score === true ? "error" : ""}><p>Player 3: </p><input value={players[2]} onChange={(e) => handlePlayerChange(2, e.target.value)}></input><p>Player 3 Score: </p><input value={scores[2]} onChange={(e) => handleScoreChange(2, e.target.value)} type="number"></input></div>
+           <div className={errors.player4Score === true ? "error" : ""}><p>Player 4: </p><input value={players[3]} onChange={(e) => handlePlayerChange(3, e.target.value)}></input><p>Player 4 Score: </p><input value={scores[3]} onChange={(e) => handleScoreChange(3, e.target.value)} type="number"></input></div>
+           <div className={errors.player5Score === true ? "error" : ""}><p>Player 5: </p><input value={players[4]} onChange={(e) => handlePlayerChange(4, e.target.value)}></input><p>Player 5 Score: </p><input value={scores[4]} onChange={(e) => handleScoreChange(4, e.target.value)} type="number"></input></div>
+           <div className={errors.player6Score === true ? "error" : ""}><p>Player 6: </p><input value={players[5]} onChange={(e) => handlePlayerChange(5, e.target.value)}></input><p>Player 6 Score: </p><input value={scores[5]} onChange={(e) => handleScoreChange(5, e.target.value)} type="number"></input></div>
+           <div className={errors.datePlayed === true ? "error" : ""}><p>Date played:* </p><input value={datePlayed} type = "date" onChange={(e) => { setDatePlayed(e.target.value); if (e.target.value) setErrors(prev => ({ ...prev, datePlayed: false })); }}></input><p>Rounds Played: </p><input value={roundsPlayed} type="number" onChange={(e) => setRoundsPlayed(e.target.value)}></input></div>
            <div className="upload-image-area" onClick={() => document.getElementById('gameSheetInput').click()}>
                <p>Upload game sheet:*</p>
                <img src="placeholder.png" id="gameSheetPreview" alt="Game sheet preview"/>

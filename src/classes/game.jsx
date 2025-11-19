@@ -1,12 +1,15 @@
 import React from 'react';
 
 class gameStructure {
-    constructor({id, players, scores, datePlayed, sheet = null}) {
+    constructor({id, players, scores, datePlayed, sheet = null, roundsPlayed}) {
         this.id = id;
-        this.players = players;
-        this.scores = scores;
+        this.playerScores = players.map((player, index) => ({
+            playerName: player,
+            score: scores[index]
+        }));
         this.datePlayed = datePlayed;
         this.sheet = sheet;
+        this.roundsPlayed = roundsPlayed;
     }
 }
 
