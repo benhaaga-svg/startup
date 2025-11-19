@@ -12,19 +12,14 @@ export function Leaderboard({userName}) {
 
     const [loadingError, setLoadingError] = React.useState(false);
     const [lastLoadTime, setLastLoadTime] = React.useState(localStorage.getItem('leaderboardLastLoadTime') || '');
-    const [leaderboardData, setLeaderboardData] = React.useState([
-        {name: 'Loading...', position: '1st', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '2nd', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '3rd', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '4th', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '5th', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: `${userName} (You)`, position: 'Loading', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-    ]);
+    const [leaderboardData, setLeaderboardData] = React.useState([]);
+
+
 
     React.useEffect(() => {
         // In a real application, you might fetch leaderboard data from an API here
             // Simulated original data fetch
-            reloadData();
+            getLeaderboard();
 
             if (!localStorage.getItem('globalStats')) {
                 setGlobalStats({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()});
@@ -33,32 +28,22 @@ export function Leaderboard({userName}) {
 
     }, []);
 
-    async function reloadData() {
-        setLoadingError(false);
-        setLeaderboardData([
-        {name: 'Loading...', position: '1st', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '2nd', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '3rd', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '4th', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: 'Loading...', position: '5th', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},
-        {name: `${userName} (You)`, position: 'Loading', gamesWon: 'N/A', gamesLost: 'N/A', avgScore: 'N/A'},]);
 
-        // Simulate data fetch
-            fetch('/api/leaderboard')
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch leaderboard');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    setLeaderboardData(data);
+    async function getLeaderboard() {
+        await fetch('/api/leaderboard')
+                .then ((response) => response.json())
+                .then ((data) => {
+                    setLeaderboardData(data)
+                    localStorage.setItem('leaderboardData', JSON.stringify(data));
+                    setLastLoadTime(new Date().toISOString());
+                    localStorage.setItem('leaderboardLastLoadTime', new Date().toISOString());
                 })
                 .catch((error) => {
                     console.error('Error fetching leaderboard data:', error);
                     setLoadingError(true);
                 });
     }
+
 
     return (
     <main className="leaderboard-main">
