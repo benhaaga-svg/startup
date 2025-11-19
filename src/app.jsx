@@ -16,8 +16,8 @@ import { Unauthenticated } from './login/unauthenticated';
 
 export default function App() {
 
-  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {user: {userName: ''}});
+  const currentAuthState = user.user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
   console.log(authState);
   return (
@@ -47,7 +47,7 @@ export default function App() {
         </nav>
         <div className='header-profile'>
           <NavLink to="/profile" className='header-profile-link'>
-            <span>{userName}</span>
+            <span>{user.user.userName}</span>
             <img className='header-img' src="/blank_user.png" alt="Profile"/>
           </NavLink>
         </div>
@@ -55,24 +55,25 @@ export default function App() {
 
       <Routes>
     <Route path='/' element={<Login
-                userName={userName}
+                userName={user.user.userName || ''}
                 authState={authState}
-                onAuthChange={(userName, authState) => {
+                onAuthChange={(userObj, authState) => {
                   setAuthState(authState);
-                  setUserName(userName);
+                  setUser(userObj);
                 }}
               />}/>
     <Route path='/home' element={<Home />} />
     <Route path='/scores' element={<Scores />} />
     <Route path='/upload' element={<Upload />} />
     <Route path='/profile' element={<Profile
-        onAuthChange={(userName,authState) =>
-          {setAuthState(authState);
-         setUserName(userName);}} />} />
-    <Route path='/leaderboard' element={<Leaderboard userName={userName} />} />
-    <Route path='/signup' element={<Signup userName={userName} onLogin={(userName) => {
+        onAuthChange={(userObj, authState) => {
+          setAuthState(authState);
+          setUser(userObj);
+        }} />} />
+    <Route path='/leaderboard' element={<Leaderboard userName={user.user.userName || ''} />} />
+    <Route path='/signup' element={<Signup userName={user.user.userName || ''} onLogin={(userObj) => {
                   setAuthState(AuthState.Authenticated);
-                  setUserName(userName);
+                  setUser(userObj.user);
                 }} />} />
     <Route path='*' element={<NotFound />} />
     </Routes>

@@ -54,9 +54,9 @@ export function Signup(props) {
       },
     });
     if (response?.status === 200) {
-      localStorage.setItem('userName', username);
+      localStorage.setItem('user', JSON.stringify({ userName: username, firstName: firstName, lastName: lastName, dob: dob }));
       console.log("Logging in user after signup:", username);
-      props.onLogin(username);
+      props.onLogin({user: { userName: username, firstName: firstName, lastName: lastName, dob: dob }});
     } else {
       const body = await response.json();
       setDisplayError(`⚠ Error: ${body.msg}`);

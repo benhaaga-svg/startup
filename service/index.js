@@ -33,10 +33,10 @@ apiRouter.post('/auth/create', async (req, res) => {
   if (await findUser('userName', req.body.userName)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await createUser(req.body.userName, req.body.password);
+    const user = await createUser(req.body.userName, req.body.password, req.body.firstName, req.body.lastName, req.body.dob);
 
     setAuthCookie(res, user.token);
-    res.send({ userName: user.userName });
+    res.send({ user: { userName: user.userName, firstName: user.firstName, lastName: user.lastName, dob: user.dob } });
   }
 });
 
@@ -48,7 +48,7 @@ apiRouter.post('/auth/login', async (req, res) => {
       user.token = uuid.v4();
       await DB.updateUser(user);
       setAuthCookie(res, user.token);
-      res.send({ userName: user.userName });
+      res.send({ user: { userName: user.userName, firstName: user.firstName, lastName: user.lastName, dob: user.dob } });
       return;
     }
   }
@@ -144,11 +144,11 @@ async function updateScores(newScore) {
   return DB.getHighScores();
 }
 
-async function createUser(email, password, firstName, lastName, dob) {
+async function createUser(userName, password, firstName, lastName, dob) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    userName: email,
+    userName: userName,
     password: passwordHash,
     firstName: firstName,
     lastName: lastName,

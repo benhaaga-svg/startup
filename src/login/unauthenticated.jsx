@@ -22,8 +22,10 @@ export function Unauthenticated(props) {
       },
     });
     if (response?.status === 200) {
-      localStorage.setItem('userName', userName);
-      props.onLogin(userName);
+      const body = await response.json();
+      localStorage.setItem('user', JSON.stringify(body));
+
+      props.onLogin(body);
       navigate("/home");
     } else {
       const body = await response.json();

@@ -6,18 +6,15 @@ export function Authenticated(props) {
   const navigate = useNavigate();
 
 
-function logout() {
-    fetch(`/api/auth/logout`, {
-      method: 'delete',
-    })
-      .catch(() => {
-        // Logout failed. Assuming offline
-      })
-      .finally(() => {
-        localStorage.removeItem('userName');
-        props.onLogout();
-        navigate('/');
-      });
+async function handleLogout() {
+    localStorage.removeItem("user");
+
+    await fetch('/api/auth/logout', { method: 'delete' });
+
+    // Reset theme to default
+
+    props.onLogout();
+    navigate('/');
   }
 
   return (
@@ -26,7 +23,7 @@ function logout() {
                 <div><p>Welcome back! {props.userName}</p></div>
                 <button onClick={() => navigate('/home')}>Continue</button>
                 <button onClick={() => {
-                    logout();
+                    handleLogout();
                      }}>Not me</button>
             </div>
         </main>

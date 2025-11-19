@@ -54,16 +54,16 @@ export function Profile({ onAuthChange }) {
     localStorage.setItem('themeColor', newColor);
   }
 
-  function handleLogout() {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("signedIn");
-    localStorage.removeItem("themeColor");
+  async function handleLogout() {
+    localStorage.removeItem("user");
+
+    await fetch('/api/auth/logout', { method: 'delete' });
 
     // Reset theme to default
     const defaultColor = '#1a237e';
     applyTheme(defaultColor);
 
-    onAuthChange('', AuthState.Unauthenticated);
+    onAuthChange({user: {userName: ''}}, AuthState.Unauthenticated);
     navigate('/');
   }
 
