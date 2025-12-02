@@ -35,7 +35,13 @@ async function updateUser(user) {
   await userCollection.updateOne({ userName: user.userName }, { $set: user });
 }
 
+async function updateDate(date) {
+  await globalStatsCollection.updateOne({}, { $set: { dateUpdated: date } }, { upsert: true });
+}
+
 async function addScore(score) {
+  await updateDate(new Date());
+  await getLeaderboard(); // Update leaderboard stats on each new score
   return scoreCollection.insertOne(score);
 }
 
@@ -142,7 +148,6 @@ async function getLeaderboard() {
     playerCount: 0,
     totalGamesPlayed: allGames.length,
     averageScore: 0,
-    dateUpdated: new Date().toISOString()
   };
 
 
