@@ -6,6 +6,7 @@ const client = new MongoClient(url);
 const db = client.db('trackyourbids');
 const userCollection = db.collection('user');
 const scoreCollection = db.collection('score');
+const globalStatsCollection = db.collection('globalStats');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -120,6 +121,8 @@ async function getAllPlayers() {
 async function getLeaderboard() {
   const allGames = await scoreCollection.find({}).toArray();
   const playerStats = {};
+    
+
 
   // Process each game to determine winners
   allGames.forEach(game => {
@@ -140,6 +143,9 @@ async function getLeaderboard() {
     if (validScores.length === 0) return;
 
     const highestScore = Math.max(...validScores.map(ps => ps.score));
+    if (highestScore > globalStatsCollection.highestScore) {
+      globalStatsCollection.highestScore = highestScore;
+    }
 
     // Process all players in this game
     validScores.forEach(ps => {
@@ -165,6 +171,12 @@ async function getLeaderboard() {
     });
   });
 
+let tempScore = 0;
+  playerStats.forEach(player => {
+    tempScore = tempScore + player.totalScore});
+  globalStatsCollection.totalScoreSum = tempScore;
+  globalStatsCollection.playerCount = Object.keys(playerStats).length;
+
   // Convert to array and calculate average scores
   const leaderboard = Object.values(playerStats)
     .map(player => ({
@@ -188,6 +200,7 @@ async function getLeaderboard() {
     ...player,
     position: positions[index] || `${index + 1}th`
   }));
+
 }
 
 module.exports = {
