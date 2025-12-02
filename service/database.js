@@ -39,6 +39,10 @@ async function addScore(score) {
   return scoreCollection.insertOne(score);
 }
 
+async function updateGlobalStats(stats) {
+  await globalStatsCollection.updateOne({}, { $set: stats }, { upsert: true });
+}
+
 function getScores() {
   const options = {
     sort: { id: 1 }
@@ -117,11 +121,30 @@ async function getAllPlayers() {
   return distinctPlayers.filter(name => name && name !== 'N/A');
 }
 
+
+async function getGlobalStats() {
+  const stats = await globalStatsCollection.findOne({});
+  return stats || {
+    totalPlayers: 0,
+    totalGamesPlayed: 0,
+    highestScore: 0,
+    averageScore: 0,
+  };
+}
+
 // Calculate leaderboard based on wins (highest score in each game)
 async function getLeaderboard() {
   const allGames = await scoreCollection.find({}).toArray();
   const playerStats = {};
-    
+  let globalStats = {
+    highestScore: 0,
+    totalScoreSum: 0,
+    playerCount: 0,
+    totalGamesPlayed: allGames.length,
+    averageScore: 0,
+    dateUpdated: new Date().toISOString()
+  };
+
 
 
   // Process each game to determine winners
@@ -143,8 +166,8 @@ async function getLeaderboard() {
     if (validScores.length === 0) return;
 
     const highestScore = Math.max(...validScores.map(ps => ps.score));
-    if (highestScore > globalStatsCollection.highestScore) {
-      globalStatsCollection.highestScore = highestScore;
+    if (highestScore > globalStats.highestScore) {
+      globalStats.highestScore = highestScore;
     }
 
     // Process all players in this game
@@ -171,12 +194,18 @@ async function getLeaderboard() {
     });
   });
 
-let tempScore = 0;
-  playerStats.forEach(player => {
-    tempScore = tempScore + player.totalScore});
-  globalStatsCollection.totalScoreSum = tempScore;
-  globalStatsCollection.playerCount = Object.keys(playerStats).length;
+  // Calculate global stats totals
+  const totalScoreSum = Object.values(playerStats).reduce((sum, player) => sum + player.totalScore, 0);
+  const playerCount = Object.keys(playerStats).length;
 
+  globalStats.totalScoreSum = totalScoreSum;
+  globalStats.playerCount = playerCount;
+  globalStats.averageScore = totalScoreSum > 0 && playerCount > 0
+    ? Math.round((totalScoreSum / playerCount) * 10) / 10
+    : 0;
+
+  // Update global stats in the database
+  await updateGlobalStats(globalStats);
   // Convert to array and calculate average scores
   const leaderboard = Object.values(playerStats)
     .map(player => ({
@@ -215,4 +244,5 @@ module.exports = {
   getPlayerStats,
   getAllPlayers,
   getLeaderboard,
+  getGlobalStats,
 };

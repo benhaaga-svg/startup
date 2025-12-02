@@ -55,6 +55,9 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
+
+
+
 // DeleteAuth logout a user
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
@@ -75,6 +78,18 @@ const verifyAuth = async (req, res, next) => {
     res.status(401).send({ msg: 'Unauthorized' });
   }
 };
+
+
+apiRouter.get('/globalStats', verifyAuth, async (_req, res) => {
+  try {
+    console.log("Global stats requested");
+    const globalStats = await DB.getGlobalStats();
+    res.send(globalStats);
+  } catch (error) {
+    console.error('Error fetching global stats:', error);
+    res.status(500).send({ msg: 'Error fetching global stats', error: error.message });
+  }
+});
 
 // GetScores
 apiRouter.get('/scores', verifyAuth, async (_req, res) => {

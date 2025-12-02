@@ -1,6 +1,7 @@
 import React from 'react';
 import './upload.css';
 import gameStructure from '../classes/game';
+import { UploadNotifier, UploadEvent } from '../classes/globalStatsNotifier';
 
 export function Upload() {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
@@ -19,7 +20,17 @@ export function Upload() {
     roundsPlayed: false
   });
 
- 
+  React.useEffect(() => {
+    UploadNotifier.addHandler((event) => {
+      console.log("Received event:", event);
+    });
+
+    return () => {
+      UploadNotifier.removeHandler((event) => {
+        console.log("Received event:", event);
+      });
+    };
+  }, []);
 
   const handlePlayerChange = (index, value) => {
     const newPlayers = [...players];
@@ -139,6 +150,9 @@ export function Upload() {
         });
         document.getElementById('gameSheetPreview').src = 'placeholder.png';
         document.getElementById('gameSheetInput').value = '';
+
+        // Notify upload end
+        UploadNotifier.broadcastEvent('Upload', UploadEvent.End, { msg: 'Game uploaded' });
       } else {
         alert('Failed to upload game. Please try again.');
       }
