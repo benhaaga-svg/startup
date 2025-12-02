@@ -3,7 +3,6 @@ import './scores.css';
 import { data } from 'react-router-dom';
 import gameStructure, {game} from '../classes/game';
 import {globalStatsDisplay} from '../classes/globalStats';
-import randomGameAdder from './randomGameAdd';
 
 export function Scores() {
 
