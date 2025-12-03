@@ -99,8 +99,15 @@ apiRouter.get('/scores', verifyAuth, async (_req, res) => {
 
 // SubmitScore
 apiRouter.post('/score', verifyAuth, async (req, res) => {
-  const scores = updateScores(req.body);
-  res.send(scores);
+  try {
+    console.log("Score submission received");
+    const scores = await updateScores(req.body);
+    console.log("Score processed successfully");
+    res.send(scores);
+  } catch (error) {
+    console.error("Error submitting score:", error);
+    res.status(500).send({ msg: 'Error submitting score', error: error.message });
+  }
 });
 
 

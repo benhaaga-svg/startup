@@ -10,6 +10,7 @@ import { Profile } from './profile/profile';
 import { Home } from './home/home';
 import { AuthState } from './login/authState';
 import { Unauthenticated } from './login/unauthenticated';
+import player from './classes/player';
 
 
 
@@ -19,6 +20,24 @@ export default function App() {
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {user: {userName: ''}});
   const currentAuthState = user.user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
+
+
+  const [globalStats, setGlobalStats] = React.useState({result: {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()}}); 
+
+React.useEffect(() => {;
+    fetchGlobalStats();
+}, []);
+
+async function fetchGlobalStats() {
+    const response = await fetch('/api/globalStats');
+    if (response.ok) {
+        const data = await response.json();
+        setGlobalStats(data);
+    } else {
+        console.error('Failed to fetch global stats');
+        return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+    }
+  }
   console.log(authState);
   return (
     
@@ -55,7 +74,7 @@ export default function App() {
 
       <Routes>
     <Route path='/' element={<Login
-                userName={user.user.userName || ''}
+                userName={user.user.userName}
                 authState={authState}
                 onAuthChange={(userObj, authState) => {
                   setAuthState(authState);
@@ -63,15 +82,15 @@ export default function App() {
                 }}
               />}/>
     <Route path='/home' element={<Home />} />
-    <Route path='/scores' element={<Scores />} />
+    <Route path='/scores' element={<Scores globalStatsProp={globalStats} />} />
     <Route path='/upload' element={<Upload />} />
     <Route path='/profile' element={<Profile
         onAuthChange={(userObj, authState) => {
           setAuthState(authState);
           setUser(userObj);
         }} />} />
-    <Route path='/leaderboard' element={<Leaderboard userName={user.user.userName || ''} />} />
-    <Route path='/signup' element={<Signup userName={user.user.userName || ''} onLogin={(userObj) => {
+    <Route path='/leaderboard' element={<Leaderboard globalStatsProp={globalStats} />} />
+    <Route path='/signup' element={<Signup userName={user.user.userName} onLogin={(userObj) => {
                   setAuthState(AuthState.Authenticated);
                   setUser(userObj.user);
                 }} />} />

@@ -2,17 +2,14 @@ import React from 'react';
 import './leaderboard.css';
 import { globalStatsDisplay } from '../classes/globalStats';
 
-export function Leaderboard({userName}) {
+export function Leaderboard({userName, globalStatsProp} ) {
   
 
-    const [globalStats, setGlobalStats] = React.useState(() => {
-        const stored = localStorage.getItem('globalStats');
-        return stored ? JSON.parse(stored) : null;
-    });
+
 
     const [loadingError, setLoadingError] = React.useState(false);
     const [lastLoadTime, setLastLoadTime] = React.useState(localStorage.getItem('leaderboardLastLoadTime') || '');
-    const [leaderboardData, setLeaderboardData] = React.useState([]);
+    const [leaderboardData, setLeaderboardData] = React.useState({ players: [] });
 
 
 
@@ -58,8 +55,10 @@ export function Leaderboard({userName}) {
                         <th>Avg Score</th>
                     </tr>
                 </thead>
+
+                
                 <tbody>
-                    {leaderboardData.map((player, index) => (
+                    {leaderboardData.players.map((player, index) => (
                         <tr key={index}>
                             <td>{player.name}</td>
                             <td>{player.position}</td>
@@ -73,7 +72,7 @@ export function Leaderboard({userName}) {
             {loadingError && <div><p className="error">Error loading leaderboard data. Please try again later.</p><button onClick={reloadData}>Retry</button></div>}
 
            <h3>Global Stats</h3>
-           {globalStats && globalStatsDisplay(globalStats)}
+           {globalStatsProp && globalStatsDisplay(globalStatsProp)}
         </main>
   );
 }

@@ -2,15 +2,12 @@ import React from 'react';
 import './scores.css';
 import { data } from 'react-router-dom';
 import gameStructure, {game} from '../classes/game';
-import {globalStatsDisplay} from '../classes/globalStats';
+import { globalStatsDisplay } from '../classes/globalStats';
 
-export function Scores() {
+export function Scores({globalStatsProp}) {
 
 
-        const [globalStats, setGlobalStats] = React.useState(() => { 
-            const stored = localStorage.getItem('globalStats');
-            return stored ? JSON.parse(stored) : null;
-        });
+        
         // const loadingScores = [
         //             new gameStructure({id: 1, players: ['Loading...', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'], scores: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], datePlayed: 'Loading...'}),
         //             new gameStructure({id: 2, players: ['Loading...', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'], scores: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A"], datePlayed: 'Loading...'}),
@@ -23,52 +20,22 @@ export function Scores() {
         });
         const [reload, setReload] = React.useState(0);
 
-        
 
 
         React.useEffect(() => {
             // Reset error state
             setLoadingError(false);
-
-            if (!localStorage.getItem('globalStats')) {
-                setGlobalStats({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()});
-                localStorage.setItem('globalStats', JSON.stringify({totalPlayers: 0, totalGamesPlayed: 0, averageScore: 0, updatedAt: new Date()}));
-            }
-
-            // Fetch scores from the API
-
-        }, [reload]);
-
-        // Start the game simulator and listen for storage changes
-        React.useEffect(() => {
-            const handleStorageChange = () => {
-                // Only update scores if we're not in an error state
-                if (!loadingError) {
-                    const updatedScores = localStorage.getItem('scores');
-                    if (updatedScores) {
-                        setScores(JSON.parse(updatedScores));
-                        // Update global stats from localStorage (already calculated by addGame)
-                        const updatedGlobalStats = localStorage.getItem('globalStats');
-                        if (updatedGlobalStats) {
-                            setGlobalStats(JSON.parse(updatedGlobalStats));
-                        }
-                    }
-                }
-            };
-
             fetchScores();
             
 
-            // Start the simulator (only once due to singleton pattern)
-            // randomGameAdder.start();
+            // Fetch scores from the API
 
-            // window.addEventListener('storage', handleStorageChange);
-            // return () => {
-            //     window.removeEventListener('storage', handleStorageChange);
-            //     // Stop simulator when component unmounts
-            //     randomGameAdder.stop();
-            // };
-        }, [loadingError]);
+        }, []);
+
+        
+
+        // Start the game simulator and listen for storage changes
+        
 
         async function fetchScores() {
                 await fetch('/api/scores')
@@ -119,7 +86,7 @@ export function Scores() {
                 </tbody>
            </table>
            {loadingError && <div><p className="error-message">Failed to load scores. Please try again later.</p> <button onClick={() => setReload(reload + 1)}>Retry</button></div>}
-           {globalStats && globalStatsDisplay(globalStats)}
+           {globalStatsProp && globalStatsDisplay(globalStatsProp)}
         </main>
   );
 }

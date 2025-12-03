@@ -150,8 +150,8 @@ export function Upload() {
         });
         document.getElementById('gameSheetPreview').src = 'placeholder.png';
         document.getElementById('gameSheetInput').value = '';
-
         // Notify upload end
+
         UploadNotifier.broadcastEvent('Upload', UploadEvent.End, { msg: 'Game uploaded' });
       } else {
         alert('Failed to upload game. Please try again.');

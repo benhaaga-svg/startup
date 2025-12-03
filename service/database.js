@@ -7,6 +7,7 @@ const db = client.db('trackyourbids');
 const userCollection = db.collection('user');
 const scoreCollection = db.collection('score');
 const globalStatsCollection = db.collection('globalStats');
+const leaderboardCollection = db.collection('leaderboard');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -40,13 +41,33 @@ async function updateDate(date) {
 }
 
 async function addScore(score) {
-  await updateDate(new Date());
-  await getLeaderboard(); // Update leaderboard stats on each new score
-  return scoreCollection.insertOne(score);
+  try {
+    await updateDate(new Date());
+    console.log("Adding score to database");
+    const result = await scoreCollection.insertOne(score);
+    console.log("Score added, now updating leaderboard");
+    await LeaderboardUpdate(); // Update leaderboard stats after adding the new score
+    console.log("Leaderboard update completed");
+    return result;
+  } catch (error) {
+    console.error("Error in addScore:", error);
+    throw error;
+  }
 }
 
+
+async function updateLeaderboard(leaderboardData) {
+    console.log("Updating leaderboard with data:", leaderboardData);
+    const result = await leaderboardCollection.updateOne({}, { $set: { players: leaderboardData } }, { upsert: true });
+    console.log("Leaderboard update result:", result);
+}
+
+
+
 async function updateGlobalStats(stats) {
-  await globalStatsCollection.updateOne({}, { $set: stats }, { upsert: true });
+  console.log("Updating global stats with:", stats);
+  const result = await globalStatsCollection.updateOne({}, { $set: stats }, { upsert: true });
+  console.log("Global stats update result:", result);
 }
 
 function getScores() {
@@ -91,6 +112,8 @@ async function getPlayerStats(playerName) {
       totalScore: 0
     };
   }
+
+ 
 
   // Extract this player's scores from all games
   const scores = games
@@ -138,9 +161,19 @@ async function getGlobalStats() {
   };
 }
 
-// Calculate leaderboard based on wins (highest score in each game)
+
 async function getLeaderboard() {
+  const stats = await leaderboardCollection.findOne({});
+  return stats || {
+    players: []
+  };
+}
+
+// Calculate leaderboard based on wins (highest score in each game)
+async function LeaderboardUpdate() {
+  console.log("LeaderboardUpdate: Starting update...");
   const allGames = await scoreCollection.find({}).toArray();
+  console.log(`LeaderboardUpdate: Found ${allGames.length} games`);
   const playerStats = {};
   let globalStats = {
     highestScore: 0,
@@ -210,7 +243,9 @@ async function getLeaderboard() {
     : 0;
 
   // Update global stats in the database
+  console.log("LeaderboardUpdate: Updating global stats...");
   await updateGlobalStats(globalStats);
+  console.log("LeaderboardUpdate: Global stats updated, building leaderboard...");
   // Convert to array and calculate average scores
   const leaderboard = Object.values(playerStats)
     .map(player => ({
@@ -230,10 +265,12 @@ async function getLeaderboard() {
 
   // Add position labels
   const positions = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
-  return leaderboard.map((player, index) => ({
+  console.log(`LeaderboardUpdate: Updating leaderboard with ${leaderboard.length} players...`);
+  await updateLeaderboard(leaderboard.map((player, index) => ({
     ...player,
     position: positions[index] || `${index + 1}th`
-  }));
+  })));
+  console.log("LeaderboardUpdate: Leaderboard update complete!");
 
 }
 
