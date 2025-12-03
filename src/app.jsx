@@ -83,7 +83,7 @@ async function fetchGlobalStats() {
               />}/>
     <Route path='/home' element={<Home />} />
     <Route path='/scores' element={<Scores globalStatsProp={globalStats} />} />
-    <Route path='/upload' element={<Upload />} />
+    <Route path='/upload' element={<Upload globalStatsUpdate = {(newStats) => setGlobalStats(newStats)} />} />
     <Route path='/profile' element={<Profile
         onAuthChange={(userObj, authState) => {
           setAuthState(authState);

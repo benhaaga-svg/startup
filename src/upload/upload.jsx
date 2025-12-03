@@ -3,7 +3,7 @@ import './upload.css';
 import gameStructure from '../classes/game';
 import { UploadNotifier, UploadEvent } from '../classes/globalStatsNotifier';
 
-export function Upload() {
+export function Upload({globalStatsUpdate}) {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
   const [scores, setScores] = React.useState(['', '', '', '', '', '']);
   const [datePlayed, setDatePlayed] = React.useState('');
@@ -152,6 +152,20 @@ export function Upload() {
         document.getElementById('gameSheetInput').value = '';
         // Notify upload end
 
+        
+        async function fetchGlobalStats() {
+    const response = await fetch('/api/globalStats');
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        console.error('Failed to fetch global stats');
+        return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+    }
+  }
+
+
+        await globalStatsUpdate(await fetchGlobalStats());
         UploadNotifier.broadcastEvent('Upload', UploadEvent.End, { msg: 'Game uploaded' });
       } else {
         alert('Failed to upload game. Please try again.');
