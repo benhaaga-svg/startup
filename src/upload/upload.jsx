@@ -3,7 +3,7 @@ import './upload.css';
 import gameStructure from '../classes/game';
 import { UploadNotifier, UploadEvent } from '../classes/globalStatsNotifier';
 
-export function Upload({globalStatsUpdate}) {
+export function Upload({globalStatsUpdate, totalGamesPlayed}) {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
   const [scores, setScores] = React.useState(['', '', '', '', '', '']);
   const [datePlayed, setDatePlayed] = React.useState('');
@@ -103,7 +103,7 @@ export function Upload({globalStatsUpdate}) {
 
     // Create new gameStructure object
     const newGame = new gameStructure({
-      id: newId,
+      id: 0,
       players: players.map(p => p || 'N/A'),
       scores: scores.map(s => s || 'N/A'),
       datePlayed: datePlayed,

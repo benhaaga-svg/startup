@@ -44,6 +44,17 @@ async function addScore(score) {
   try {
     await updateDate(new Date());
     console.log("Adding score to database");
+
+    // Get the highest existing ID
+    const lastScore = await scoreCollection.findOne(
+      {},
+      { sort: { id: -1 }, projection: { id: 1 } }
+    );
+
+    // Set the new ID to be one higher than the current max (or 1 if no scores exist)
+    const newId = lastScore && lastScore.id ? lastScore.id + 1 : 1;
+    score.id = newId;
+
     const result = await scoreCollection.insertOne(score);
     console.log("Score added, now updating leaderboard");
     await LeaderboardUpdate(); // Update leaderboard stats after adding the new score
