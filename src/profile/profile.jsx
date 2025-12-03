@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { AuthState } from '../login/authState';
 import './profile.css';
 
-export function Profile({ onAuthChange }) {
+export function Profile({ onAuthChange, user }) {
   const navigate = useNavigate();
   const [themeColor, setThemeColor] = React.useState(
     localStorage.getItem('themeColor') || '#1a237e'
   );
+
+
 
   React.useEffect(() => {
     // Apply saved theme on component mount
@@ -15,7 +17,26 @@ export function Profile({ onAuthChange }) {
     if (savedColor) {
       applyTheme(savedColor);
     }
+
+    const userStats = getPlayerStats();
+    console.log("Fetched user stats:", userStats);
+
+
   }, []);
+
+
+  async function getPlayerStats() {
+    await fetch(`/api/player/${user.firstName} ${user.lastName}/history`)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch player stats');
+        } else if (response.status === 204) {
+            console.log("No player stats found");
+            return null;
+        }
+        console.log("Player stats response:", response);
+        return response.json();
+    })}
 
   function applyTheme(color) {
     // Convert hex to RGB for lighter shade

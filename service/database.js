@@ -112,8 +112,7 @@ async function getPlayerHistory(playerName) {
 // Get player statistics (games played, average score, etc.)
 async function getPlayerStats(playerName) {
   const games = await getPlayerHistory(playerName);
-
-  if (games.length === 0) {
+  if (games.length === 0 || !games) {
     return {
       playerName,
       gamesPlayed: 0,
@@ -144,10 +143,9 @@ async function getPlayerStats(playerName) {
   const averageScore = scores.length > 0 ? totalScore / scores.length : 0;
   const highestScore = scores.length > 0 ? Math.max(...scores) : 0;
   const lowestScore = scores.length > 0 ? Math.min(...scores) : 0;
-
   return {
     playerName,
-    gamesPlayed: scores.length, // Count only games with valid scores
+    gamesPlayed: scores.length || 0, // Count only games with valid scores
     averageScore: Math.round(averageScore * 10) / 10,
     highestScore,
     lowestScore,

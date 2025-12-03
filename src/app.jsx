@@ -114,7 +114,7 @@ async function fetchGlobalStats() {
         onAuthChange={(userObj, authState) => {
           setAuthState(authState);
           setUser(userObj);
-        }} />} />
+        }} user={user} />} />
     <Route path='/leaderboard' element={<Leaderboard globalStatsProp={globalStats} />} />
     <Route path='/signup' element={<Signup userName={user.userName} onLogin={(userObj) => {
                   setAuthState(AuthState.Authenticated);
