@@ -19,7 +19,8 @@ class UploadEventNotifier {
   constructor() {
     let port = window.location.port;
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
+    const url = port ? `${protocol}://${window.location.hostname}:${port}/ws` : `${protocol}://${window.location.hostname}/ws`;
+    this.socket = new WebSocket(url);
     this.socket.onopen = (event) => {
       this.receiveEvent(new EventMessage('Started', UploadEvent.System, { msg: 'connected' }));
     };
@@ -28,15 +29,32 @@ class UploadEventNotifier {
     };
     this.socket.onmessage = async (msg) => {
       try {
-        const event = JSON.parse(await msg.data.text());
+        let data = msg.data;
+
+        // If data is a Blob, read it as text first
+        if (data instanceof Blob) {
+          data = await data.text();
+        }
+
+        const event = JSON.parse(data);
+        console.log("WebSocket received event:", event);
         this.receiveEvent(event);
-      } catch {}
+      } catch (error) {
+        console.error("Error processing WebSocket message:", error, "Raw message:", msg.data);
+      }
     };
   }
 
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
-    this.socket.send(JSON.stringify(event));
+    console.log("WebSocket sending event:", event);
+
+    // Only send if socket is connected
+    if (this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify(event));
+    } else {
+      console.warn('WebSocket not connected. Current state:', this.socket.readyState);
+    }
   }
 
   addHandler(handler) {
@@ -44,16 +62,14 @@ class UploadEventNotifier {
   }
 
   removeHandler(handler) {
-    this.handlers.filter((h) => h !== handler);
+    this.handlers = this.handlers.filter((h) => h !== handler);
   }
 
   receiveEvent(event) {
     this.events.push(event);
 
-    this.events.forEach((e) => {
-      this.handlers.forEach((handler) => {
-        handler(e);
-      });
+    this.handlers.forEach((handler) => {
+      handler(event);
     });
   }
 }

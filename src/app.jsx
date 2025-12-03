@@ -10,8 +10,7 @@ import { Profile } from './profile/profile';
 import { Home } from './home/home';
 import { AuthState } from './login/authState';
 import { Unauthenticated } from './login/unauthenticated';
-import player from './classes/player';
-
+import { UploadEvent, UploadNotifier } from './classes/globalStatsNotifier';
 
 
 
@@ -20,9 +19,37 @@ export default function App() {
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {user: {userName: ''}});
   const currentAuthState = user.user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
+  const [events, setEvent] = React.useState([]);
 
+  React.useEffect(() => {
+    UploadNotifier.addHandler(handleUploadEvent);
 
-  const [globalStats, setGlobalStats] = React.useState({result: {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()}}); 
+    return () => {
+      UploadNotifier.removeHandler(handleUploadEvent);
+    };
+  }, []);
+
+  function handleUploadEvent(event) {
+    setEvent((prevEvents) => [...prevEvents, event]);
+  }
+
+  React.useEffect(() => {
+    const lastEvent = events[events.length - 1];
+    if (lastEvent) {
+      console.log("Received WebSocket event:", lastEvent);
+    }
+    if(lastEvent && lastEvent.type === UploadEvent.End) {
+      console.log("Updating global stats from WebSocket event");
+      if(lastEvent.value && lastEvent.value.msg) {
+        setGlobalStats(lastEvent.value.msg);
+      } else {
+        // Fallback to fetching if stats not in event
+        fetchGlobalStats();
+      }
+    }
+  }, [events]);
+
+  const [globalStats, setGlobalStats] = React.useState({playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()}); 
 
 React.useEffect(() => {;
     fetchGlobalStats();
@@ -83,7 +110,7 @@ async function fetchGlobalStats() {
               />}/>
     <Route path='/home' element={<Home />} />
     <Route path='/scores' element={<Scores globalStatsProp={globalStats} />} />
-    <Route path='/upload' element={<Upload globalStatsUpdate = {(newStats) => setGlobalStats(newStats)} />} />
+    <Route path='/upload' element={<Upload globalStatsUpdate = {(newstats) => setGlobalStats(newstats)} />} />
     <Route path='/profile' element={<Profile
         onAuthChange={(userObj, authState) => {
           setAuthState(authState);

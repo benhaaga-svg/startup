@@ -12,22 +12,23 @@ export function Signup(props) {
     passwordAgain: false
   });
   const [showErrorMessage, setShowErrorMessage] = React.useState(false);
+  const [displayError, setDisplayError] = React.useState('');
 
-  function createUser() {
+  async function createUser() {
     const firstName = document.querySelector('input[placeholder="First Name"]').value;
     const lastName = document.querySelector('input[placeholder="Last Name"]').value;
-    const dob = document.querySelector('input[placeholder="MM/DD/YYYY"]').value;
+    const dob = document.querySelector('input[type="date"]').value;
     const username = document.querySelector('input[placeholder="Username"]').value;
     const password = document.querySelector('input[placeholder="Password"]').value;
     const passwordAgain = document.querySelector('input[placeholder="Password Again"]').value;
 
     // Validate each field
     const newErrors = {
-      firstName: firstName === "" && firstName.length >= 3 && /^[a-zA-Z]+$/.test(firstName),
-      lastName: lastName === "" && lastName.length >= 3 && /^[a-zA-Z]+$/.test(lastName),
-      dob: !dob.match(/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/),
-      username: username === "" && username.length >= 3 && /^[a-zA-Z0-9]+$/.test(username),
-      password: password === "" && password.length >= 6 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password),
+      firstName: firstName === "" || firstName.length < 3 || !/^[a-zA-Z]+$/.test(firstName),
+      lastName: lastName === "" || lastName.length < 3 || !/^[a-zA-Z]+$/.test(lastName),
+      dob: dob === "" || !dob.match(/^\d{4}-\d{2}-\d{2}$/),
+      username: username === "" || username.length < 3 || !/^[a-zA-Z0-9]+$/.test(username),
+      password: password === "" || password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password),
       passwordAgain: passwordAgain === "" || password !== passwordAgain
     };
 
@@ -36,41 +37,30 @@ export function Signup(props) {
     // Check if any errors exist
     const hasErrors = Object.values(newErrors).some(error => error);
 
-
-  async function createUser() {
-    createUserCall(`/api/auth/create`);
+    if (!hasErrors) {
+      await createUserCall(`/api/auth/create`, { userName: username, password: password, firstName: firstName, lastName: lastName, dob: dob });
+    } else {
+      setShowErrorMessage(true);
+    }
   }
-  
 
-
-  async function createUserCall(endpoint) {
-    
-    
+  async function createUserCall(endpoint, userData) {
     const response = await fetch(endpoint, {
       method: 'post',
-      body: JSON.stringify({ userName: username, password: password, firstName: firstName, lastName: lastName, dob: dob }),
+      body: JSON.stringify(userData),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
     });
     if (response?.status === 200) {
-      localStorage.setItem('user', JSON.stringify({ userName: username, firstName: firstName, lastName: lastName, dob: dob }));
-      console.log("Logging in user after signup:", username);
-      props.onLogin({user: { userName: username, firstName: firstName, lastName: lastName, dob: dob }});
+      const userObj = { user: { userName: userData.userName, firstName: userData.firstName, lastName: userData.lastName, dob: userData.dob } };
+      localStorage.setItem('user', JSON.stringify(userObj));
+      console.log("Logging in user after signup:", userData.userName);
+      props.onLogin(userObj);
+      navigate("/home");
     } else {
       const body = await response.json();
       setDisplayError(`⚠ Error: ${body.msg}`);
-    }
-  }
-
-
-
-
-    if (!hasErrors) {
-       createUser()
-      .finally(() => navigate("/"))
-    } else {
-      setShowErrorMessage(true);
     }
   }
 
@@ -125,6 +115,9 @@ export function Signup(props) {
         </div>
         {showErrorMessage && (
           <div id="error-message">Please make sure all fields are filled out correctly</div>
+        )}
+        {displayError && (
+          <div id="error-message">{displayError}</div>
         )}
         <div>
           <button onClick={() => createUser()}>Sign Up</button>

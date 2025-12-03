@@ -20,18 +20,6 @@ export function Upload({globalStatsUpdate}) {
     roundsPlayed: false
   });
 
-  React.useEffect(() => {
-    UploadNotifier.addHandler((event) => {
-      console.log("Received event:", event);
-    });
-
-    return () => {
-      UploadNotifier.removeHandler((event) => {
-        console.log("Received event:", event);
-      });
-    };
-  }, []);
-
   const handlePlayerChange = (index, value) => {
     const newPlayers = [...players];
     newPlayers[index] = value;
@@ -64,6 +52,8 @@ export function Upload({globalStatsUpdate}) {
 
 
   const handleSubmit = async () => {
+    console.log("handleSubmit called");
+
     // Reset errors first
     const newErrors = {
       datePlayed: false,
@@ -94,8 +84,11 @@ export function Upload({globalStatsUpdate}) {
 
     // Check if there are any errors
     if (Object.values(newErrors).some(Boolean)) {
+      console.log("Validation failed, errors:", newErrors);
       return;
     }
+
+    console.log("Validation passed, proceeding with upload");
 
     // Get existing scores from localStorage
     let existingScores = localStorage.getItem('scores')
@@ -147,12 +140,13 @@ export function Upload({globalStatsUpdate}) {
           player4Score: false,
           player5Score: false,
           player6Score: false,
+          roundsPlayed: false
         });
         document.getElementById('gameSheetPreview').src = 'placeholder.png';
         document.getElementById('gameSheetInput').value = '';
         // Notify upload end
 
-        
+        console.log("Fetching updated global stats after upload");
         async function fetchGlobalStats() {
     const response = await fetch('/api/globalStats');
     if (response.ok) {
@@ -163,10 +157,17 @@ export function Upload({globalStatsUpdate}) {
         return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
     }
   }
+        let newStats = await fetchGlobalStats();
 
+        await globalStatsUpdate(newStats);
+        console.log("Broadcasting upload end event with stats:", newStats);
 
-        await globalStatsUpdate(await fetchGlobalStats());
-        UploadNotifier.broadcastEvent('Upload', UploadEvent.End, { msg: 'Game uploaded' });
+        // Broadcast the event (non-blocking)
+        try {
+          UploadNotifier.broadcastEvent('Upload', UploadEvent.End, { msg: newStats });
+        } catch (error) {
+          console.error('Failed to broadcast upload event:', error);
+        }
       } else {
         alert('Failed to upload game. Please try again.');
       }
