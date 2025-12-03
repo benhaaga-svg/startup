@@ -16,11 +16,10 @@ import { UploadEvent, UploadNotifier } from './classes/globalStatsNotifier';
 
 export default function App() {
 
-  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {user: {userName: ''}});
-  const currentAuthState = user.user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
+  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {userName: '', firstName: '', lastName: '', dob: ''});
+  const currentAuthState = user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
   const [events, setEvent] = React.useState([]);
-
   React.useEffect(() => {
     UploadNotifier.addHandler(handleUploadEvent);
 
@@ -93,7 +92,7 @@ async function fetchGlobalStats() {
         </nav>
         <div className='header-profile'>
           <NavLink to="/profile" className='header-profile-link'>
-            <span>{user.user.userName}</span>
+            <span>{user.userName}</span>
             <img className='header-img' src="/blank_user.png" alt="Profile"/>
           </NavLink>
         </div>
@@ -101,7 +100,7 @@ async function fetchGlobalStats() {
 
       <Routes>
     <Route path='/' element={<Login
-                userName={user.user.userName}
+                userName={user.userName}
                 authState={authState}
                 onAuthChange={(userObj, authState) => {
                   setAuthState(authState);
@@ -117,9 +116,9 @@ async function fetchGlobalStats() {
           setUser(userObj);
         }} />} />
     <Route path='/leaderboard' element={<Leaderboard globalStatsProp={globalStats} />} />
-    <Route path='/signup' element={<Signup userName={user.user.userName} onLogin={(userObj) => {
+    <Route path='/signup' element={<Signup userName={user.userName} onLogin={(userObj) => {
                   setAuthState(AuthState.Authenticated);
-                  setUser(userObj.user);
+                  setUser(userObj);
                 }} />} />
     <Route path='*' element={<NotFound />} />
     </Routes>

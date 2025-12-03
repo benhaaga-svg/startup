@@ -23,9 +23,8 @@ export function Unauthenticated(props) {
     });
     if (response?.status === 200) {
       const body = await response.json();
-      localStorage.setItem('user', JSON.stringify(body));
-
-      props.onLogin(body);
+      localStorage.setItem('user', JSON.stringify(body.user));
+      props.onLogin(body.user);
       navigate("/home");
     } else {
       const body = await response.json();

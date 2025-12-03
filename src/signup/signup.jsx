@@ -53,11 +53,11 @@ export function Signup(props) {
       },
     });
     if (response?.status === 200) {
-      const userObj = { user: { userName: userData.userName, firstName: userData.firstName, lastName: userData.lastName, dob: userData.dob } };
+      const userObj = { userName: userData.userName, firstName: userData.firstName, lastName: userData.lastName, dob: userData.dob };
       localStorage.setItem('user', JSON.stringify(userObj));
       console.log("Logging in user after signup:", userData.userName);
-      props.onLogin(userObj);
-      navigate("/home");
+      await props.onLogin(userObj);
+      navigate('/');
     } else {
       const body = await response.json();
       setDisplayError(`⚠ Error: ${body.msg}`);
