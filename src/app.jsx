@@ -1,6 +1,6 @@
 import React from 'react';
 import './app.css';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from './login/login';
 import { Signup } from './signup/signup';
 import { Scores } from './scores/scores';
@@ -11,11 +11,10 @@ import { Home } from './home/home';
 import { AuthState } from './login/authState';
 import { Unauthenticated } from './login/unauthenticated';
 import { UploadEvent, UploadNotifier } from './classes/globalStatsNotifier';
+import { setUnauthorizedHandler, authFetch } from './utils/authFetch';
 
-
-
-export default function App() {
-
+function AppContent() {
+  const navigate = useNavigate();
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')) || {userName: '', firstName: '', lastName: '', dob: ''});
   const currentAuthState = user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
@@ -30,12 +29,25 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
+    // Set up the global unauthorized handler
+    setUnauthorizedHandler(() => {
+      handleUnauthorized();
+    });
+
     verifyAuthentication();
   }, []);
 
+  function handleUnauthorized() {
+    console.log('Unauthorized access detected - redirecting to login');
+    localStorage.removeItem('user');
+    setUser({userName: '', firstName: '', lastName: '', dob: ''});
+    setAuthState(AuthState.Unauthenticated);
+    navigate('/');
+  }
+
   async function verifyAuthentication() {
     try {
-      const response = await fetch('/api/auth/verify');
+      const response = await authFetch('/api/auth/verify');
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
@@ -81,21 +93,22 @@ React.useEffect(() => {;
 }, []);
 
 async function fetchGlobalStats() {
-    const response = await fetch('/api/globalStats');
-    if (response.ok) {
-        const data = await response.json();
-        setGlobalStats(data);
-    } else {
-        console.error('Failed to fetch global stats');
-        return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+    try {
+      const response = await authFetch('/api/globalStats');
+      if (response.ok) {
+          const data = await response.json();
+          setGlobalStats(data);
+      } else {
+          console.error('Failed to fetch global stats');
+          return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+      }
+    } catch (error) {
+      console.error('Failed to fetch global stats:', error);
+      return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
     }
   }
   console.log(authState);
   return (
-    
-
-
-    <BrowserRouter>
     <div className='div'>
       {currentAuthState === AuthState.Authenticated && <header className='header'>
         <nav className='header-nav'>
@@ -159,6 +172,13 @@ async function fetchGlobalStats() {
 
         </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

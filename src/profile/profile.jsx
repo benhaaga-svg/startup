@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthState } from '../login/authState';
 import './profile.css';
+import { authFetch } from '../utils/authFetch';
 
 export function Profile({ onAuthChange, user }) {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function Profile({ onAuthChange, user }) {
 
   async function getPlayerStats() {
     try {
-      const response = await fetch(`/api/player/${user.firstName} ${user.lastName}/stats`);
+      const response = await authFetch(`/api/player/${user.firstName} ${user.lastName}/stats`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch player stats');
@@ -86,16 +87,18 @@ export function Profile({ onAuthChange, user }) {
   }
 
   async function handleLogout() {
-    localStorage.removeItem("user");
-
+    // Call logout endpoint to clear server-side session/cookie
     await fetch('/api/auth/logout', { method: 'delete' });
-    
+
+    // Clear local user data
+    localStorage.removeItem("user");
 
     // Reset theme to default
     const defaultColor = '#1a237e';
     applyTheme(defaultColor);
 
-    onAuthChange({user: {userName: ''}}, AuthState.Unauthenticated);
+    // Update auth state and navigate to login
+    onAuthChange({userName: '', firstName: '', lastName: '', dob: ''}, AuthState.Unauthenticated);
     navigate('/');
   }
 

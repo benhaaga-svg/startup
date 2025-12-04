@@ -3,6 +3,7 @@ import './scores.css';
 import { data } from 'react-router-dom';
 import gameStructure, {game} from '../classes/game';
 import { globalStatsDisplay } from '../classes/globalStats';
+import { authFetch } from '../utils/authFetch';
 
 export function Scores({globalStatsProp}) {
 
@@ -38,18 +39,15 @@ export function Scores({globalStatsProp}) {
         
 
         async function fetchScores() {
-                await fetch('/api/scores')
-                .then((response) => {
+                try {
+                    const response = await authFetch('/api/scores');
                     if (!response.ok) {
                         throw new Error('Failed to fetch scores');
                     }
-                    return response.json();
-                })
-                .then((data) => {
+                    const data = await response.json();
                     setScores(data);
                     localStorage.setItem('scores', JSON.stringify(data));
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error fetching scores:', error);
                     setLoadingError(true);
                     // Fallback to localStorage if API fails
@@ -57,7 +55,7 @@ export function Scores({globalStatsProp}) {
                     if (localScores) {
                         setScores(JSON.parse(localScores));
                     }
-                });
+                }
             }
 
 

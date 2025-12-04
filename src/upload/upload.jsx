@@ -2,6 +2,7 @@ import React from 'react';
 import './upload.css';
 import gameStructure from '../classes/game';
 import { UploadNotifier, UploadEvent } from '../classes/globalStatsNotifier';
+import { authFetch } from '../utils/authFetch';
 
 export function Upload({globalStatsUpdate, totalGamesPlayed}) {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
@@ -113,7 +114,7 @@ export function Upload({globalStatsUpdate, totalGamesPlayed}) {
 
     try {
       // Submit to API
-      const response = await fetch('/api/score', {
+      const response = await authFetch('/api/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGame)
@@ -148,13 +149,18 @@ export function Upload({globalStatsUpdate, totalGamesPlayed}) {
 
         console.log("Fetching updated global stats after upload");
         async function fetchGlobalStats() {
-    const response = await fetch('/api/globalStats');
-    if (response.ok) {
-        const data = await response.json();
-        return data;
-    } else {
-        console.error('Failed to fetch global stats');
-        return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+    try {
+      const response = await authFetch('/api/globalStats');
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      } else {
+          console.error('Failed to fetch global stats');
+          return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
+      }
+    } catch (error) {
+      console.error('Failed to fetch global stats:', error);
+      return {playerCount: 0, totalGamesPlayed: 0, averageScore: 0, dateUpdated: new Date()};
     }
   }
         let newStats = await fetchGlobalStats();

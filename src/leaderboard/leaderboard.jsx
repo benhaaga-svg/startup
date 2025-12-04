@@ -1,6 +1,7 @@
 import React from 'react';
 import './leaderboard.css';
 import { globalStatsDisplay } from '../classes/globalStats';
+import { authFetch } from '../utils/authFetch';
 
 export function Leaderboard({userName, globalStatsProp} ) {
   
@@ -27,18 +28,17 @@ export function Leaderboard({userName, globalStatsProp} ) {
 
 
     async function getLeaderboard() {
-        await fetch('/api/leaderboard')
-                .then ((response) => response.json())
-                .then ((data) => {
-                    setLeaderboardData(data)
-                    localStorage.setItem('leaderboardData', JSON.stringify(data));
-                    setLastLoadTime(new Date().toISOString());
-                    localStorage.setItem('leaderboardLastLoadTime', new Date().toISOString());
-                })
-                .catch((error) => {
-                    console.error('Error fetching leaderboard data:', error);
-                    setLoadingError(true);
-                });
+        try {
+            const response = await authFetch('/api/leaderboard');
+            const data = await response.json();
+            setLeaderboardData(data);
+            localStorage.setItem('leaderboardData', JSON.stringify(data));
+            setLastLoadTime(new Date().toISOString());
+            localStorage.setItem('leaderboardLastLoadTime', new Date().toISOString());
+        } catch (error) {
+            console.error('Error fetching leaderboard data:', error);
+            setLoadingError(true);
+        }
     }
 
 
