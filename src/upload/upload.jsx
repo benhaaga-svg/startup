@@ -3,6 +3,7 @@ import './upload.css';
 import gameStructure from '../classes/game';
 import { UploadNotifier, UploadEvent } from '../classes/globalStatsNotifier';
 import { authFetch } from '../utils/authFetch';
+import { Placeholder } from 'react-bootstrap';
 
 export function Upload({globalStatsUpdate, totalGamesPlayed}) {
   const [players, setPlayers] = React.useState(['', '', '', '', '', '']);
@@ -193,7 +194,7 @@ export function Upload({globalStatsUpdate, totalGamesPlayed}) {
            <div className={errors.player4Score === true ? "error" : ""}><p>Player 4: </p><input value={players[3]} onChange={(e) => handlePlayerChange(3, e.target.value)}></input><p>Player 4 Score: </p><input value={scores[3]} onChange={(e) => handleScoreChange(3, e.target.value)} type="number"></input></div>
            <div className={errors.player5Score === true ? "error" : ""}><p>Player 5: </p><input value={players[4]} onChange={(e) => handlePlayerChange(4, e.target.value)}></input><p>Player 5 Score: </p><input value={scores[4]} onChange={(e) => handleScoreChange(4, e.target.value)} type="number"></input></div>
            <div className={errors.player6Score === true ? "error" : ""}><p>Player 6: </p><input value={players[5]} onChange={(e) => handlePlayerChange(5, e.target.value)}></input><p>Player 6 Score: </p><input value={scores[5]} onChange={(e) => handleScoreChange(5, e.target.value)} type="number"></input></div>
-           <div className={errors.datePlayed === true ? "error" : ""}><p>Date played:* </p><input value={datePlayed} type = "date" onChange={(e) => { setDatePlayed(e.target.value); if (e.target.value) setErrors(prev => ({ ...prev, datePlayed: false })); }}></input><p>Rounds Played: </p><input value={roundsPlayed} type="number" onChange={(e) => setRoundsPlayed(e.target.value)}></input></div>
+           <div className={errors.datePlayed === true || errors.roundsPlayed === true ? "error" : "" }><p>Date played:* </p><input value={datePlayed} type = "date" onChange={(e) => { setDatePlayed(e.target.value); if (e.target.value) setErrors(prev => ({ ...prev, datePlayed: false })); }}></input><p>Rounds Played: </p><input value={roundsPlayed} type="number" min={4} onChange={(e) => setRoundsPlayed(e.target.value)} placeholder="Must be 4+"></input></div>
            <div className="upload-image-area" onClick={() => document.getElementById('gameSheetInput').click()}>
                <p>Upload game sheet:*</p>
                <img src="placeholder.png" id="gameSheetPreview" alt="Game sheet preview"/>
