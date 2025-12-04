@@ -69,6 +69,16 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   res.status(204).end();
 });
 
+// Verify current authentication status
+apiRouter.get('/auth/verify', async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  if (user) {
+    res.send({ user: { userName: user.userName, firstName: user.firstName, lastName: user.lastName, dob: user.dob } });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
 // Middleware to verify that the user is authorized to call an endpoint
 const verifyAuth = async (req, res, next) => {
   const user = await findUser('token', req.cookies[authCookieName]);

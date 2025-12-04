@@ -20,6 +20,7 @@ export default function App() {
   const currentAuthState = user.userName === "" ? AuthState.Unauthenticated : AuthState.Authenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
   const [events, setEvent] = React.useState([]);
+
   React.useEffect(() => {
     UploadNotifier.addHandler(handleUploadEvent);
 
@@ -27,6 +28,31 @@ export default function App() {
       UploadNotifier.removeHandler(handleUploadEvent);
     };
   }, []);
+
+  React.useEffect(() => {
+    verifyAuthentication();
+  }, []);
+
+  async function verifyAuthentication() {
+    try {
+      const response = await fetch('/api/auth/verify');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+        setAuthState(AuthState.Authenticated);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      } else {
+        localStorage.removeItem('user');
+        setUser({userName: '', firstName: '', lastName: '', dob: ''});
+        setAuthState(AuthState.Unauthenticated);
+      }
+    } catch (error) {
+      console.error('Error verifying authentication:', error);
+      localStorage.removeItem('user');
+      setUser({userName: '', firstName: '', lastName: '', dob: ''});
+      setAuthState(AuthState.Unauthenticated);
+    }
+  }
 
   function handleUploadEvent(event) {
     setEvent((prevEvents) => [...prevEvents, event]);
