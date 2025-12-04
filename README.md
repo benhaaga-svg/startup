@@ -112,8 +112,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Backend listens for WebSocket connection** - I did complete this part of the deliverable.
-- [x] **Frontend makes WebSocket connection** - I did complete this part of the deliverable.
-- [x] **Data sent over WebSocket connection** - I did complete this part of the deliverable.
-- [x] **WebSocket data displayed** - I did complete this part of the deliverable.
-- [x] **Application is fully functional** - I did complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - I did complete this part of the deliverable. Console logs every event
+- [x] **Frontend makes WebSocket connection** - I did complete this part of the deliverable. Console logs the connection
+- [x] **Data sent over WebSocket connection** - I did complete this part of the deliverable. New stats are sent over
+- [x] **WebSocket data displayed** - I did complete this part of the deliverable. Global stats repopulates with the stats recieved 
+- [x] **Application is fully functional** - I did complete this part of the deliverable. 
