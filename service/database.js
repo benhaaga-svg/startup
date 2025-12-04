@@ -100,21 +100,28 @@ function getHighScores() {
 
 // Get all games for a specific player
 async function getPlayerHistory(playerName) {
+  // Properly decode URL-encoded player name
+  playerName = decodeURIComponent(playerName);
+
   const query = {
     'playerScores.playerName': playerName
   };
   const options = {
     sort: { id: -1 } // Most recent games first
   };
+
   return scoreCollection.find(query, options).toArray();
 }
 
 // Get player statistics (games played, average score, etc.)
 async function getPlayerStats(playerName) {
+  // Decode the player name (in case it's URL encoded)
+  const decodedPlayerName = decodeURIComponent(playerName);
+
   const games = await getPlayerHistory(playerName);
   if (games.length === 0 || !games) {
     return {
-      playerName,
+      playerName: decodedPlayerName,
       gamesPlayed: 0,
       averageScore: 0,
       highestScore: 0,
@@ -123,12 +130,10 @@ async function getPlayerStats(playerName) {
     };
   }
 
- 
-
   // Extract this player's scores from all games
   const scores = games
     .map(game => {
-      const playerScore = game.playerScores?.find(ps => ps.playerName === playerName);
+      const playerScore = game.playerScores?.find(ps => ps.playerName === decodedPlayerName);
       return playerScore ? playerScore.score : null;
     })
     .filter(score => {
@@ -144,7 +149,7 @@ async function getPlayerStats(playerName) {
   const highestScore = scores.length > 0 ? Math.max(...scores) : 0;
   const lowestScore = scores.length > 0 ? Math.min(...scores) : 0;
   return {
-    playerName,
+    playerName: decodedPlayerName,
     gamesPlayed: scores.length || 0, // Count only games with valid scores
     averageScore: Math.round(averageScore * 10) / 10,
     highestScore,

@@ -8,8 +8,13 @@ export function Profile({ onAuthChange, user }) {
   const [themeColor, setThemeColor] = React.useState(
     localStorage.getItem('themeColor') || '#1a237e'
   );
-
-
+  const [playerStats, setPlayerStats] = React.useState({
+    gamesPlayed: 0,
+    averageScore: 0,
+    highestScore: 0,
+    lowestScore: 0,
+    totalScore: 0
+  });
 
   React.useEffect(() => {
     // Apply saved theme on component mount
@@ -18,25 +23,30 @@ export function Profile({ onAuthChange, user }) {
       applyTheme(savedColor);
     }
 
-    const userStats = getPlayerStats();
-    console.log("Fetched user stats:", userStats);
-
-
+    // Fetch player stats
+    getPlayerStats();
   }, []);
 
-
   async function getPlayerStats() {
-    await fetch(`/api/player/${user.firstName} ${user.lastName}/history`)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Failed to fetch player stats');
-        } else if (response.status === 204) {
-            console.log("No player stats found");
-            return null;
-        }
-        console.log("Player stats response:", response);
-        return response.json();
-    })}
+    try {
+      const response = await fetch(`/api/player/${user.firstName} ${user.lastName}/stats`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch player stats');
+      }
+
+      if (response.status === 204) {
+        console.log("No player stats found");
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Player stats data:", data);
+      setPlayerStats(data);
+    } catch (error) {
+      console.error("Error fetching player stats:", error);
+    }
+  }
 
   function applyTheme(color) {
     // Convert hex to RGB for lighter shade
@@ -93,9 +103,15 @@ export function Profile({ onAuthChange, user }) {
     <main className="profile-main">
            <h2>My Info</h2>
            <h4>My Stats</h4>
-            <h5> Games Played: 12 | W/L Ratio: 2/12 | AVG Score: 24 | Highest Score: 101 | Global Ranking: 12th</h5>
+            <h5>
+              Games Played: {playerStats.gamesPlayed} |
+              AVG Score: {playerStats.averageScore} |
+              Highest Score: {playerStats.highestScore} |
+              Lowest Score: {playerStats.lowestScore} |
+              Total Score: {playerStats.totalScore}
+            </h5>
 
-           <div><p>Name: Ben Haaga | Tracking started: 06/06/2025</p></div>
+           <div><p>Name: {user.firstName} {user.lastName}</p></div>
 
            <div className="theme-picker">
              <h4>Theme Color</h4>

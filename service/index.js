@@ -125,7 +125,6 @@ apiRouter.get('/leaderboard', verifyAuth, async (_req, res) => {
 
 // Get player history - all games for a specific player
 apiRouter.get('/player/:playerName/history', verifyAuth, async (req, res) => {
-  console.log("Player history requested for:", req.params.playerName);
   try {
     const history = await DB.getPlayerHistory(req.params.playerName);
     if (history.length === 0) {
